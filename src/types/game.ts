@@ -45,6 +45,7 @@ export interface PlayerState {
   doubleInvestActive: boolean
   investChoices: number
   emiDamageTaken: boolean
+  hasForfeited?: boolean
   profile?: {
     rank_points: number
     avatar_url: string | null

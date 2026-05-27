@@ -384,14 +384,16 @@ export function advanceTurn(state: GameState): GameState {
 
   let nextIndex = (newState.currentPlayerIndex + 1) % newState.players.length
   let loopCount = 0
-  while (newState.players[nextIndex].skippedTurns > 0 && loopCount < newState.players.length) {
+  while ((newState.players[nextIndex].hasForfeited || newState.players[nextIndex].skippedTurns > 0) && loopCount < newState.players.length) {
     const p = newState.players[nextIndex]
-    const updatedPlayers = newState.players.map((pl, i) =>
-      i === nextIndex ? { ...pl, skippedTurns: pl.skippedTurns - 1 } : pl
-    )
-    newState = { ...newState, players: updatedPlayers }
-    const logEntry = `${p.name} is skipping their turn.`
-    newState = { ...newState, log: [logEntry, ...newState.log].slice(0, 20) }
+    if (!p.hasForfeited) {
+      const updatedPlayers = newState.players.map((pl, i) =>
+        i === nextIndex ? { ...pl, skippedTurns: pl.skippedTurns - 1 } : pl
+      )
+      newState = { ...newState, players: updatedPlayers }
+      const logEntry = `${p.name} is skipping their turn.`
+      newState = { ...newState, log: [logEntry, ...newState.log].slice(0, 20) }
+    }
     nextIndex = (nextIndex + 1) % newState.players.length
     loopCount++
   }
@@ -414,7 +416,7 @@ export function forceSkipTurn(state: GameState): GameState {
   return advanceTurn(skippedState)
 }
 
-function checkWinCondition(state: GameState): GameState {
+export function checkWinCondition(state: GameState): GameState {
   const winner = state.players.find(p => p.wealth >= state.wealthGoal)
   if (winner) {
     return {
@@ -422,6 +424,16 @@ function checkWinCondition(state: GameState): GameState {
       winner,
       phase: 'game_over',
       log: [`🏆 ${winner.name} reached ₹50 Lakhs and WINS!`, ...state.log].slice(0, 20),
+    }
+  }
+  const activePlayers = state.players.filter(p => !p.hasForfeited)
+  if (activePlayers.length === 1 && state.players.length > 1) {
+    const remainingWinner = activePlayers[0]
+    return {
+      ...state,
+      winner: remainingWinner,
+      phase: 'game_over',
+      log: [`🏆 Everyone else forfeited! ${remainingWinner.name} WINS!`, ...state.log].slice(0, 20),
     }
   }
   return state

@@ -7,7 +7,7 @@ import { formatWealth } from '../types/game'
 import {
   processDecision, processAction, advanceTurn, startDrawPhase, forceSkipTurn
 } from '../lib/gameEngine'
-import { pushGameState } from '../lib/multiplayerEngine'
+import { pushGameState, leaveRoom } from '../lib/multiplayerEngine'
 import { saveGameResult } from '../lib/auth'
 import Confetti from 'react-confetti'
 import { supabase } from '../lib/supabase'
@@ -276,31 +276,50 @@ export function MultiplayerGame() {
     setShowForfeitModal(false)
     const gs = gameStateRef.current
     if (!gs || !roomId || !myPlayerId) {
+      if (roomId && myPlayerId) {
+        await leaveRoom(roomId, myPlayerId).catch(() => {})
+      }
       navigate('/dashboard')
       return
     }
 
-    // Set wealth to 0 to guarantee last place and end the game
     const updatedPlayers = gs.players.map(p => {
       if (p.id === myPlayerId) {
-        return { ...p, wealth: 0 }
+        return { ...p, wealth: 0, hasForfeited: true }
       }
       return p
     })
     
-    const forfeitState = { 
+    let forfeitState = { 
       ...gs, 
       players: updatedPlayers, 
-      phase: 'game_over' as const,
-      log: [`${myPlayer?.name} forfeited the match.`, ...gs.log]
+      log: [`${myPlayer?.name} forfeited the match.`, ...gs.log].slice(0, 20)
+    }
+
+    // If it's our turn, pass turn.
+    if (gs.currentPlayerIndex === myPlayerIndex) {
+      forfeitState = advanceTurn(forfeitState)
+    } else {
+      // It's not our turn, so just check win condition in case we were the last active player
+      // Need to import checkWinCondition if we were to call it directly. But actually advanceTurn is called by the current player eventually.
+      // Wait, let's just do a quick win check.
+      const activePlayers = updatedPlayers.filter(p => !p.hasForfeited)
+      if (activePlayers.length <= 1) {
+        const remainingWinner = activePlayers[0] ?? updatedPlayers[0]
+        forfeitState = {
+          ...forfeitState,
+          winner: remainingWinner,
+          phase: 'game_over',
+          log: [`🏆 Everyone else forfeited! ${remainingWinner.name} WINS!`, ...forfeitState.log].slice(0, 20),
+        }
+      }
     }
     
     setGameState(forfeitState)
     gameStateRef.current = forfeitState
     
     await pushState(forfeitState)
-    // The player who forfeited is instantly navigated out to Dashboard.
-    // The remaining players will receive the updated game_over state and the ResultScreen.
+    await leaveRoom(roomId, myPlayerId).catch(() => {})
     navigate('/dashboard')
   }
 
@@ -373,7 +392,12 @@ export function MultiplayerGame() {
 
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
             <Button variant="gold" size="lg" onClick={() => navigate('/multiplayer')}>Play Again</Button>
-            <Button variant="secondary" onClick={() => navigate('/dashboard')}>Dashboard</Button>
+            <Button variant="secondary" onClick={async () => {
+              if (roomId && myPlayerId) {
+                await leaveRoom(roomId, myPlayerId).catch(() => {})
+              }
+              navigate('/dashboard')
+            }}>Dashboard</Button>
           </div>
         </div>
       </div>

@@ -174,11 +174,11 @@ export function GameBoard({
             </div>
 
             {/* Right Side: Decision Options */}
-            <div style={{ flex: '0 1 240px', minWidth: 220, display: 'flex', flexDirection: 'column', gap: 12, borderLeft: '1px solid rgba(0,0,0,0.1)', paddingLeft: 24, animation: 'fadeIn 0.3s ease' }}>
-              <h3 style={{ fontSize: 24, fontWeight: 800, color: 'var(--text-dark)', marginBottom: 8, fontFamily: 'var(--font-display)' }}>
+            <div style={{ flex: '0 1 240px', minWidth: 220, display: 'flex', flexDirection: 'column', gap: 8, borderLeft: '1px solid rgba(0,0,0,0.1)', paddingLeft: 24, animation: 'fadeIn 0.3s ease' }}>
+              <h3 style={{ fontSize: 22, fontWeight: 800, color: 'var(--text-dark)', marginBottom: 4, fontFamily: 'var(--font-display)' }}>
                 {gameState.pendingDecision.card.name}
               </h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: 15, marginBottom: 16 }}>{gameState.pendingDecision.card.flavor}</p>
+              <p style={{ color: 'var(--text-muted)', fontSize: 14, marginBottom: 12 }}>{gameState.pendingDecision.card.flavor}</p>
               
               {gameState.pendingDecision.card.options?.map(opt => {
                 const colors = {
@@ -194,7 +194,7 @@ export function GameBoard({
                     key={opt.type}
                     onClick={() => onDecision(opt.type as any)}
                     style={{
-                      padding: '12px 16px', borderRadius: 10,
+                      padding: '8px 12px', borderRadius: 10,
                       background: c.bg, border: `2px solid ${c.border}`,
                       color: 'var(--text-dark)', cursor: 'pointer', textAlign: 'left',
                       transition: 'all 0.2s', fontFamily: 'inherit',
@@ -202,14 +202,19 @@ export function GameBoard({
                     onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = c.hoverBg; (e.currentTarget as HTMLButtonElement).style.borderColor = c.borderFocus }}
                     onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = c.bg; (e.currentTarget as HTMLButtonElement).style.borderColor = c.border }}
                   >
-                    <div style={{ fontSize: 12, fontWeight: 800, color: c.labelColor, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 2 }}>{opt.type}</div>
-                    <div style={{ fontSize: 16, fontWeight: 700, marginBottom: 2 }}>{opt.label}</div>
-                    <div style={{ fontSize: 13, color: 'var(--text-muted)', marginBottom: 6, lineHeight: 1.2 }}>{opt.description}</div>
-                    <div style={{ fontSize: 18, fontWeight: 800, color: effectVal >= 0 ? '#059669' : '#c2410c', fontFamily: 'var(--font-display)' }}>
+                    <div style={{ fontSize: 11, fontWeight: 800, color: c.labelColor, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 2 }}>{opt.type}</div>
+                    <div style={{ fontSize: 15, fontWeight: 700, marginBottom: 2 }}>{opt.label}</div>
+                    <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 4, lineHeight: 1.2 }}>{opt.description}</div>
+                    <div style={{ fontSize: 16, fontWeight: 800, color: effectVal >= 0 ? '#059669' : '#c2410c', fontFamily: 'var(--font-display)' }}>
                       {sign}{formatWealth(Math.abs(effectVal))}
                       {opt.effect.type === 'wealth_next_turn' && <span style={{ fontSize: 12, color: 'var(--text-muted)', fontWeight: 600, marginLeft: 4 }}>next turn</span>}
                       {opt.effect.type === 'wealth_end_game' && <span style={{ fontSize: 12, color: 'var(--text-muted)', fontWeight: 600, marginLeft: 4 }}>at game end</span>}
                     </div>
+                    {opt.investRisk && opt.failEffect && (
+                      <div style={{ fontSize: 12, color: '#dc2626', fontWeight: 700, marginTop: 4, background: 'rgba(220, 38, 38, 0.1)', padding: '4px 8px', borderRadius: 6, display: 'inline-block' }}>
+                        ⚠️ {opt.investRisk}% Risk: {opt.failEffect.value! < 0 ? '-' : '+'}{formatWealth(Math.abs(opt.failEffect.value ?? 0))}
+                      </div>
+                    )}
                   </button>
                 )
               })}
