@@ -5,55 +5,128 @@
 }
 
 :root {
-  --color-bg: #09090b;
-  --color-bg-2: #18181b;
-  --color-bg-3: #27272a;
+  /* Background / paper */
+  --bg-mint-white: #F0FFF0;
+  --bg-soft-cream: #F0F0E0;
+  --bg-warm-white: #FFFFF0;
+  --card-paper: #FFF0D0;
+  --card-cream: #F0E0C0;
+  --border-soft: #D0D0C0;
+
+  /* Main dark green UI */
+  --green-black: #001010;
+  --green-deep: #002020;
+  --green-forest: #003020;
+  --green-teal-dark: #003030;
+  --green-primary: #004030;
+  --green-mid: #005030;
+
+  /* Bright green accents */
+  --green-action: #107050;
+  --green-success: #208050;
+  --green-bright: #209060;
+  --green-highlight: #30A060;
+  --green-light: #E0F0E0;
+
+  /* Gold / coin / reward */
+  --gold: #FFD050;
+  --gold-light: #FFF0C0;
+  --coin-orange: #F0A030;
+  --coin-shadow: #B07010;
+
+  /* Orange / spend button */
+  --orange-primary: #E05020;
+  --orange-dark: #D05020;
+  --orange-bright: #E06020;
+  --orange-soft: #F09060;
+  --orange-light: #FFD0A0;
+
+  /* Blue / invest / shield */
+  --blue-primary: #1070C0;
+  --blue-deep: #1060B0;
+  --blue-light: #E0E0F0;
+  --blue-soft: #D0E0E0;
+
+  /* Text / neutrals */
+  --text-dark: #101010;
+  --text-soft-black: #202020;
+  --text-muted: #708070;
+  --gray: #A0B0A0;
+  --gray-light: #C0D0C0;
+  --white: #FFFFFF;
+  --black: #000000;
+
+  /* Mappings to preserve existing component styles */
+  --color-bg: var(--green-black);
+  --color-bg-2: var(--green-deep);
+  --color-bg-3: var(--green-forest);
   --color-surface: rgba(255, 255, 255, 0.03);
   --color-surface-2: rgba(255, 255, 255, 0.08);
   --color-border: rgba(255, 255, 255, 0.1);
   --color-border-hover: rgba(255, 255, 255, 0.2);
 
-  --color-primary: #3b82f6;
-  --color-primary-light: #60a5fa;
-  --color-primary-dark: #2563eb;
+  --color-primary: var(--blue-primary);
+  --color-primary-light: var(--blue-light);
+  --color-primary-dark: var(--blue-deep);
 
-  --color-secondary: #14b8a6;
-  --color-secondary-light: #2dd4bf;
+  --color-secondary: var(--green-bright);
+  --color-secondary-light: var(--green-light);
 
-  --color-gold: #f59e0b;
-  --color-gold-light: #fbbf24;
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
 
-  --color-success: #10b981;
-  --color-warning: #f59e0b;
-  --color-error: #ef4444;
-  --color-info: #3b82f6;
+  --color-success: var(--green-success);
+  --color-warning: var(--coin-orange);
+  --color-error: var(--orange-primary);
+  --color-info: var(--blue-primary);
 
-  --color-decision: rgba(16, 185, 129, 0.8);
-  --color-action: rgba(239, 68, 68, 0.8);
-  --color-defense: rgba(59, 130, 246, 0.8);
-  --color-legendary: rgba(245, 158, 11, 0.8);
+  --color-decision: rgba(32, 144, 96, 0.8);
+  --color-action: rgba(224, 80, 32, 0.8);
+  --color-defense: rgba(16, 112, 192, 0.8);
+  --color-legendary: rgba(255, 208, 80, 0.8);
 
-  --color-text: #f8fafc;
-  --color-text-2: #94a3b8;
-  --color-text-3: #64748b;
+  --color-text: var(--text-dark);
+  --color-text-2: var(--text-soft-black);
+  --color-text-3: var(--text-muted);
 
   --radius-sm: 8px;
   --radius-md: 16px;
   --radius-lg: 24px;
   --radius-xl: 32px;
 
-  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.25);
-  --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.4);
-  --shadow-glow-blue: 0 0 24px rgba(59,130,246,0.3);
-  --shadow-glow-gold: 0 0 24px rgba(245,158,11,0.3);
-  --shadow-glow-green: 0 0 24px rgba(16,185,129,0.3);
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.5);
+  --shadow-glow-blue: 0 0 24px rgba(16, 112, 192, 0.35);
+  --shadow-glow-gold: 0 0 24px rgba(255, 208, 80, 0.35);
+  --shadow-glow-green: 0 0 24px rgba(48, 160, 96, 0.35);
+  --shadow-glow-orange: 0 0 24px rgba(224, 80, 32, 0.35);
 
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --font-sans: 'Outfit', 'Inter', system-ui, sans-serif;
+  --font-display: 'Space Grotesk', 'Outfit', 'Inter', system-ui, sans-serif;
   
-  --bg-gradient: radial-gradient(ellipse at top, #1e1b4b 0%, #09090b 70%);
+  --bg-gradient: linear-gradient(135deg, #EEEFE0 0%, #9FC7AA 100%);
 }
+
+.spend {
+  background: linear-gradient(180deg, #F09060, #E05020 55%, #D05020) !important;
+  color: #FFFFFF !important;
+}
+
+.save {
+  background: linear-gradient(180deg, #30A060, #107050 60%, #004030) !important;
+  color: #FFFFFF !important;
+}
+
+.invest {
+  background: linear-gradient(180deg, #1070C0, #1060B0 60%, #004070) !important;
+  color: #FFFFFF !important;
+}
+
+.dark-panel {
+  background: linear-gradient(180deg, #004030, #002020) !important;
+}
+
 
 html, body {
   height: 100%;
@@ -163,20 +236,20 @@ input, textarea, select {
 
 /* Glassmorphism Utilities */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-top: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
 .glass-pill {
@@ -247,20 +320,8 @@ input, textarea, select {
 }
 
 .players-container {
-  display: flex;
-  flex-direction: row;
-  gap: 16px;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  padding: 12px 4px 16px;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  justify-content: center;
-}
-.players-container::-webkit-scrollbar {
-  display: none;
-}
-.players-container > div {
-  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
 }
 

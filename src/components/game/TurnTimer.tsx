@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { playSound } from '../../lib/audio'
+import { Timer } from 'lucide-react'
 
 interface TurnTimerProps {
   turnStartTime: number
@@ -41,15 +42,31 @@ export function TurnTimer({ turnStartTime, timeLimit, onTimeout, active }: TurnT
   const isDanger = timeLeft <= 10000
 
   return (
-    <div style={{
-      width: '100%', height: 6, background: 'rgba(255,255,255,0.1)',
-      borderRadius: 4, overflow: 'hidden', marginTop: 12, marginBottom: 4
-    }}>
-      <motion.div
-        animate={{ width: `${pct}%`, backgroundColor: isDanger ? '#ef4444' : '#3b82f6' }}
-        transition={{ duration: 0.1, ease: 'linear' }}
-        style={{ height: '100%', borderRadius: 4 }}
-      />
+    <div style={{ marginBottom: 16 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: isDanger ? '#ef4444' : '#64748b', fontSize: 12, fontWeight: 700 }}>
+          <Timer size={14} className={isDanger ? 'animate-pulse' : ''} />
+          {isDanger ? 'HURRY UP!' : 'TIME REMAINING'}
+        </div>
+        <div style={{ color: isDanger ? '#ef4444' : '#94a3b8', fontSize: 13, fontWeight: 700, fontFamily: 'var(--font-display)' }}>
+          {Math.ceil(timeLeft / 1000)}s
+        </div>
+      </div>
+      <div style={{
+        width: '100%', height: 8, background: 'rgba(0,0,0,0.05)',
+        borderRadius: 4, overflow: 'hidden',
+        border: '1px solid rgba(0,0,0,0.05)'
+      }}>
+        <motion.div
+          animate={{ 
+            width: `${pct}%`, 
+            backgroundColor: isDanger ? '#ef4444' : '#10b981',
+            boxShadow: isDanger ? '0 0 8px rgba(239,68,68,0.5)' : 'none'
+          }}
+          transition={{ duration: 0.1, ease: 'linear' }}
+          style={{ height: '100%', borderRadius: 3 }}
+        />
+      </div>
     </div>
   )
 }

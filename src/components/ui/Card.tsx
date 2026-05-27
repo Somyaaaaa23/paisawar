@@ -11,10 +11,10 @@ interface CardProps {
 
 export function Card({ children, style, className, onClick, hoverable, glow }: CardProps) {
   const glowColors = {
-    blue: '0 0 20px rgba(37,99,235,0.25)',
-    gold: '0 0 20px rgba(245,158,11,0.3)',
-    green: '0 0 20px rgba(5,150,105,0.25)',
-    red: '0 0 20px rgba(220,38,38,0.25)',
+    blue: 'var(--shadow-glow-blue)',
+    gold: 'var(--shadow-glow-gold)',
+    green: 'var(--shadow-glow-green)',
+    red: 'var(--shadow-glow-orange)',
   }
 
   return (

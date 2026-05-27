@@ -308,14 +308,14 @@ export function MultiplayerGame() {
 
   if (uiPhase === 'loading' || !gameState) {
     return (
-      <div style={{ minHeight: '100vh', background: '#0a0e1a', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 16 }}>
+      <div style={{ minHeight: '100vh', background: 'var(--green-black)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 16 }}>
         <div style={{
           width: 44, height: 44, borderRadius: '50%',
-          border: '3px solid rgba(255,255,255,0.08)',
-          borderTopColor: '#f59e0b',
+          border: '3px solid var(--green-primary)',
+          borderTopColor: 'var(--gold)',
           animation: 'spin 0.8s linear infinite',
         }} />
-        <div style={{ color: '#64748b', fontSize: 18 }}>Loading game...</div>
+        <div style={{ color: 'var(--gray)', fontSize: 18 }}>Loading game...</div>
         <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
     )
@@ -329,28 +329,28 @@ export function MultiplayerGame() {
     const ordinal = placement === 1 ? 'st' : placement === 2 ? 'nd' : placement === 3 ? 'rd' : 'th'
 
     return (
-      <div style={{ minHeight: '100vh', background: '#0a0e1a', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
+      <div style={{ minHeight: '100vh', background: 'var(--green-black)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
         {isWinner && <Confetti width={window.innerWidth} height={window.innerHeight} recycle={false} numberOfPieces={500} colors={['#f59e0b', '#10b981', '#3b82f6', '#ec4899', '#f1f5f9']} />}
         <div style={{ width: '100%', maxWidth: 520, textAlign: 'center', zIndex: 10 }}>
           <div style={{ fontSize: 80, marginBottom: 16 }}>
             {isWinner ? '🏆' : placement === 2 ? '🥈' : placement === 3 ? '🥉' : '💪'}
           </div>
-          <h1 style={{ fontSize: 40, fontWeight: 800, fontFamily: 'Space Grotesk, sans-serif', color: isWinner ? '#f59e0b' : '#f1f5f9', marginBottom: 8 }}>
+          <h1 style={{ fontSize: 40, fontWeight: 800, fontFamily: 'var(--font-display)', color: isWinner ? 'var(--gold)' : 'var(--green-light)', marginBottom: 8 }}>
             {isWinner ? 'Victory!' : `${placement}${ordinal} Place`}
           </h1>
-          <p style={{ color: '#94a3b8', marginBottom: 28, fontSize: 20 }}>
+          <p style={{ color: 'var(--gray)', marginBottom: 28, fontSize: 20 }}>
             Final wealth: {formatWealth(myFinalPlayer?.wealth ?? 0)}
           </p>
 
-          <div style={{ background: '#1a2235', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 16, padding: 20, marginBottom: 24 }}>
-            <h3 style={{ fontSize: 16, fontWeight: 700, color: '#475569', marginBottom: 14, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+          <div style={{ background: 'var(--green-deep)', border: '1px solid var(--green-primary)', borderRadius: 16, padding: 20, marginBottom: 24 }}>
+            <h3 style={{ fontSize: 16, fontWeight: 700, color: 'var(--gray)', marginBottom: 14, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
               Final Rankings
             </h3>
             {sorted.map((p, i) => (
               <div key={p.id} style={{
                 display: 'flex', justifyContent: 'space-between', alignItems: 'center',
                 padding: '10px 0',
-                borderBottom: i < sorted.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none',
+                borderBottom: i < sorted.length - 1 ? '1px solid var(--green-primary)' : 'none',
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                   <span style={{ fontSize: 25, width: 28 }}>
@@ -359,12 +359,12 @@ export function MultiplayerGame() {
                   <span style={{
                     fontSize: 18,
                     fontWeight: p.id === myPlayerId ? 700 : 500,
-                    color: p.id === myPlayerId ? '#60a5fa' : '#f1f5f9',
+                    color: p.id === myPlayerId ? 'var(--green-bright)' : 'var(--green-light)',
                   }}>
                     {p.name}{p.id === myPlayerId ? ' (you)' : ''}
                   </span>
                 </div>
-                <span style={{ fontSize: 18, fontWeight: 700, color: '#10b981', fontFamily: 'Space Grotesk, sans-serif' }}>
+                <span style={{ fontSize: 18, fontWeight: 700, color: 'var(--green-bright)', fontFamily: 'var(--font-display)' }}>
                   {formatWealth(p.wealth)}
                 </span>
               </div>
@@ -381,24 +381,27 @@ export function MultiplayerGame() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: 'transparent' }}>
       {/* Header */}
-      <div className="glass-panel" style={{
+      <div style={{
         position: 'sticky', top: 0, zIndex: 40,
-        padding: '0 20px', height: 60,
+        padding: '0 24px', height: 64,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        borderRadius: 0, borderTop: 'none', borderLeft: 'none', borderRight: 'none',
+        background: '#ffffff',
+        borderBottom: '1px solid #e2e8f0',
+        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)',
       }}>
-        <button onClick={() => setShowForfeitModal(true)} style={{ background: 'none', border: 'none', color: '#64748b', cursor: 'pointer', fontSize: 16, fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: 6 }}>
-          ← Leave Match
+        <button onClick={() => setShowForfeitModal(true)} style={{ background: 'none', border: 'none', color: '#64748b', cursor: 'pointer', fontSize: 14, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 6 }}>
+          ← LEAVE
         </button>
-        <div style={{ fontFamily: 'Space Grotesk, sans-serif', fontWeight: 800, fontSize: 20, color: '#f59e0b', position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
-          PAISA WAR
+        <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 22, color: '#0f172a', position: 'absolute', left: '50%', transform: 'translateX(-50%)', letterSpacing: '-0.02em' }}>
+          PAISA<span style={{ color: '#10b981' }}>WAR</span>
         </div>
-        <div style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
-          <span style={{ padding: '3px 10px', borderRadius: 5, background: 'rgba(16,185,129,0.15)', color: '#34d399', fontSize: 14, fontWeight: 700 }}>
-            🌐 ONLINE
-          </span>
+        <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '4px 10px', borderRadius: 20, background: '#f0fdf4', border: '1px solid #bbf7d0' }}>
+            <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#22c55e', boxShadow: '0 0 8px #22c55e' }} />
+            <span style={{ color: '#16a34a', fontSize: 12, fontWeight: 700 }}>ONLINE</span>
+          </div>
         </div>
       </div>
 

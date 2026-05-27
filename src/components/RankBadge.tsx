@@ -21,10 +21,10 @@ export function RankBadge({ rp, showProgress, size = 'md' }: RankBadgeProps) {
         <span style={{ fontSize, fontWeight: 700, color: rank.color, fontFamily: 'Space Grotesk, sans-serif' }}>
           {rank.name}
         </span>
-        <span style={{ fontSize: fontSize - 2, color: '#64748b' }}>{rp.toLocaleString()} RP</span>
+        <span style={{ fontSize: fontSize - 2, color: 'var(--text-muted)' }}>{rp.toLocaleString()} RP</span>
       </div>
       {showProgress && (
-        <div style={{ height: 4, background: 'rgba(255,255,255,0.08)', borderRadius: 2, overflow: 'hidden' }}>
+        <div style={{ height: 4, background: 'rgba(0,0,0,0.1)', borderRadius: 2, overflow: 'hidden' }}>
           <div style={{
             height: '100%', borderRadius: 2, background: rank.color,
             width: `${Math.min(100, progress)}%`,
@@ -33,7 +33,7 @@ export function RankBadge({ rp, showProgress, size = 'md' }: RankBadgeProps) {
         </div>
       )}
       {showProgress && nextRank && (
-        <div style={{ fontSize: 14, color: '#64748b' }}>{rank.maxRP - rp} RP to next rank</div>
+        <div style={{ fontSize: 14, color: 'var(--text-muted)' }}>{rank.maxRP - rp} RP to next rank</div>
       )}
     </div>
   )

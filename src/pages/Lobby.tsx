@@ -179,38 +179,38 @@ export function Lobby() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0e1a', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
+    <div style={{ minHeight: '100vh', background: 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
       <div style={{ width: '100%', maxWidth: 480, animation: 'slideUp 0.4s ease' }}>
         <button
           onClick={() => navigate('/dashboard')}
-          style={{ background: 'none', border: 'none', color: '#64748b', cursor: 'pointer', fontSize: 16, fontFamily: 'inherit', marginBottom: 28, display: 'flex', alignItems: 'center', gap: 6 }}
+          style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontSize: 16, fontFamily: 'inherit', marginBottom: 28, display: 'flex', alignItems: 'center', gap: 6 }}
         >
           ← Back to Dashboard
         </button>
 
         <div style={{ textAlign: 'center', marginBottom: 36 }}>
           <div style={{ fontSize: 50, marginBottom: 12 }}>🌐</div>
-          <h1 style={{ fontSize: 35, fontWeight: 800, color: '#f1f5f9', fontFamily: 'Space Grotesk, sans-serif', marginBottom: 8 }}>
+          <h1 style={{ fontSize: 35, fontWeight: 800, color: 'var(--text-dark)', fontFamily: 'var(--font-display)', marginBottom: 8 }}>
             Play Online
           </h1>
-          <p style={{ color: '#64748b', fontSize: 18 }}>
+          <p style={{ color: 'var(--text-muted)', fontSize: 18 }}>
             Create a room or join a friend's game with a code.
           </p>
         </div>
 
         {error && (
-          <div style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: 10, padding: '12px 16px', fontSize: 16, color: '#f87171', marginBottom: 20 }}>
+          <div style={{ background: 'rgba(224,80,32,0.1)', border: '1px solid var(--orange-primary)', borderRadius: 10, padding: '12px 16px', fontSize: 16, color: 'var(--orange-soft)', marginBottom: 20 }}>
             {error}
           </div>
         )}
 
         {/* Create Room */}
         <Card style={{ padding: 24, marginBottom: 16 }}>
-          <h2 style={{ fontSize: 21, fontWeight: 700, color: '#f1f5f9', fontFamily: 'Space Grotesk, sans-serif', marginBottom: 16 }}>
+          <h2 style={{ fontSize: 21, fontWeight: 700, color: 'var(--text-dark)', fontFamily: 'var(--font-display)', marginBottom: 16 }}>
             Create a Room
           </h2>
           <div style={{ marginBottom: 16 }}>
-            <div style={{ fontSize: 16, color: '#64748b', marginBottom: 8, fontWeight: 500 }}>Max Players</div>
+            <div style={{ fontSize: 16, color: 'var(--text-muted)', marginBottom: 8, fontWeight: 500 }}>Max Players</div>
             <div style={{ display: 'flex', gap: 8 }}>
               {[2, 3, 4, 5, 6].map(n => (
                 <button
@@ -218,9 +218,9 @@ export function Lobby() {
                   onClick={() => setMaxPlayers(n)}
                   style={{
                     width: 44, height: 44, borderRadius: 8,
-                    border: `2px solid ${maxPlayers === n ? '#2563eb' : 'rgba(255,255,255,0.1)'}`,
-                    background: maxPlayers === n ? 'rgba(37,99,235,0.2)' : 'transparent',
-                    color: maxPlayers === n ? '#60a5fa' : '#94a3b8',
+                    border: `2px solid ${maxPlayers === n ? 'var(--blue-primary)' : 'rgba(0,0,0,0.1)'}`,
+                    background: maxPlayers === n ? 'rgba(16,112,192,0.1)' : 'transparent',
+                    color: maxPlayers === n ? 'var(--blue-deep)' : 'var(--text-muted)',
                     fontWeight: 700, fontSize: 19, cursor: 'pointer',
                     transition: 'all 0.15s', fontFamily: 'inherit',
                   }}
@@ -237,7 +237,7 @@ export function Lobby() {
 
         {/* Join Room */}
         <Card style={{ padding: 24 }}>
-          <h2 style={{ fontSize: 21, fontWeight: 700, color: '#f1f5f9', fontFamily: 'Space Grotesk, sans-serif', marginBottom: 16 }}>
+          <h2 style={{ fontSize: 21, fontWeight: 700, color: 'var(--text-dark)', fontFamily: 'var(--font-display)', marginBottom: 16 }}>
             Join a Room
           </h2>
           <div style={{ display: 'flex', gap: 10 }}>
@@ -248,14 +248,14 @@ export function Lobby() {
               maxLength={6}
               onKeyDown={e => e.key === 'Enter' && handleJoin()}
               style={{
-                flex: 1, padding: '10px 14px', background: '#0f1524',
-                border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10,
-                color: '#f1f5f9', fontSize: 20, fontWeight: 700,
-                letterSpacing: '0.15em', fontFamily: 'Space Grotesk, sans-serif',
+                flex: 1, padding: '10px 14px', background: 'rgba(0,0,0,0.02)',
+                border: '1px solid rgba(0,0,0,0.1)', borderRadius: 10,
+                color: 'var(--text-dark)', fontSize: 20, fontWeight: 700,
+                letterSpacing: '0.15em', fontFamily: 'var(--font-display)',
                 outline: 'none',
               }}
-              onFocus={e => { e.target.style.borderColor = '#2563eb' }}
-              onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.1)' }}
+              onFocus={e => { e.target.style.borderColor = 'var(--blue-primary)' }}
+              onBlur={e => { e.target.style.borderColor = 'rgba(0,0,0,0.1)' }}
             />
             <Button onClick={handleJoin} loading={loading} disabled={joinCode.length < 4}>
               Join
@@ -293,36 +293,36 @@ function WaitingRoom({
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0e1a', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
+    <div style={{ minHeight: '100vh', background: 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
       <div style={{ width: '100%', maxWidth: 520, animation: 'slideUp 0.4s ease' }}>
 
         {/* Room Code */}
         <div style={{ textAlign: 'center', marginBottom: 28 }}>
-          <div style={{ fontSize: 15, color: '#64748b', marginBottom: 8, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+          <div style={{ fontSize: 15, color: 'var(--text-muted)', marginBottom: 8, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
             Share this code to invite players
           </div>
           <div
             onClick={copyCode}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 14,
-              background: '#1a2235', border: '2px solid rgba(245,158,11,0.5)',
+              background: 'rgba(0,0,0,0.05)', border: '2px solid var(--orange-dark)',
               borderRadius: 16, padding: '16px 32px', cursor: 'pointer',
               transition: 'all 0.2s', userSelect: 'none',
             }}
-            onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = '#f59e0b' }}
-            onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(245,158,11,0.5)' }}
+            onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'var(--orange-primary)' }}
+            onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'var(--orange-dark)' }}
           >
-            <span style={{ fontSize: 45, fontWeight: 800, letterSpacing: '0.25em', color: '#f59e0b', fontFamily: 'Space Grotesk, sans-serif' }}>
+            <span style={{ fontSize: 45, fontWeight: 800, letterSpacing: '0.25em', color: 'var(--orange-dark)', fontFamily: 'var(--font-display)' }}>
               {room.code}
             </span>
-            <span style={{ fontSize: 15, color: copied ? '#10b981' : '#64748b', fontWeight: 600, whiteSpace: 'nowrap' }}>
+            <span style={{ fontSize: 15, color: copied ? 'var(--green-primary)' : 'var(--text-muted)', fontWeight: 600, whiteSpace: 'nowrap' }}>
               {copied ? '✓ Copied!' : 'Click to copy'}
             </span>
           </div>
         </div>
 
         {error && (
-          <div style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: 10, padding: '12px 16px', fontSize: 16, color: '#f87171', marginBottom: 16 }}>
+          <div style={{ background: 'rgba(224,80,32,0.1)', border: '1px solid var(--orange-primary)', borderRadius: 10, padding: '12px 16px', fontSize: 16, color: 'var(--orange-soft)', marginBottom: 16 }}>
             {error}
           </div>
         )}
@@ -330,12 +330,12 @@ function WaitingRoom({
         {/* Players List */}
         <Card style={{ padding: 20, marginBottom: 14 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
-            <h2 style={{ fontSize: 19, fontWeight: 700, color: '#f1f5f9', fontFamily: 'Space Grotesk, sans-serif' }}>
+            <h2 style={{ fontSize: 19, fontWeight: 700, color: 'var(--text-dark)', fontFamily: 'var(--font-display)' }}>
               Players ({roomPlayers.length}/{room.max_players})
             </h2>
-            <div style={{ fontSize: 15, color: '#64748b' }}>
+            <div style={{ fontSize: 15, color: 'var(--text-muted)' }}>
               {allReady
-                ? <span style={{ color: '#10b981', fontWeight: 700 }}>All ready!</span>
+                ? <span style={{ color: 'var(--green-primary)', fontWeight: 700 }}>All ready!</span>
                 : nonHostPlayers.length === 0
                   ? <span>Waiting for players...</span>
                   : <span>{nonHostPlayers.filter(p => p.is_ready).length}/{nonHostPlayers.length} ready</span>
@@ -350,31 +350,31 @@ function WaitingRoom({
                 style={{
                   display: 'flex', justifyContent: 'space-between', alignItems: 'center',
                   padding: '12px 14px', borderRadius: 10,
-                  background: p.player_id === room.host_id ? 'rgba(245,158,11,0.07)' : 'rgba(255,255,255,0.03)',
-                  border: `1px solid ${p.player_id === room.host_id ? 'rgba(245,158,11,0.25)' : 'rgba(255,255,255,0.07)'}`,
+                  background: p.player_id === room.host_id ? 'rgba(224,80,32,0.06)' : 'rgba(0,0,0,0.05)',
+                  border: `1px solid ${p.player_id === room.host_id ? 'var(--orange-primary)' : 'rgba(0,0,0,0.1)'}`,
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                   <div style={{
                     width: 38, height: 38, borderRadius: '50%',
-                    background: `hsl(${p.seat_order * 55 + 200}, 55%, 38%)`,
+                    background: `hsl(${p.seat_order * 55 + 140}, 60%, 40%)`,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     fontSize: 19, fontWeight: 700, color: '#fff', flexShrink: 0,
                   }}>
                     {p.username[0]?.toUpperCase()}
                   </div>
                   <div>
-                    <div style={{ fontSize: 18, fontWeight: 600, color: '#f1f5f9' }}>{p.username}</div>
-                    <div style={{ fontSize: 14, color: '#64748b' }}>
+                    <div style={{ fontSize: 18, fontWeight: 600, color: 'var(--text-dark)' }}>{p.username}</div>
+                    <div style={{ fontSize: 14, color: 'var(--text-muted)' }}>
                       {p.player_id === room.host_id ? '👑 Host' : `Player ${p.seat_order + 1}`}
                     </div>
                   </div>
                 </div>
                 <div style={{
                   fontSize: 15, fontWeight: 700, padding: '5px 12px', borderRadius: 6,
-                  background: p.is_ready ? 'rgba(16,185,129,0.15)' : 'rgba(100,116,139,0.12)',
-                  color: p.is_ready ? '#10b981' : '#64748b',
-                  border: `1px solid ${p.is_ready ? 'rgba(16,185,129,0.3)' : 'rgba(100,116,139,0.2)'}`,
+                  background: p.is_ready ? 'rgba(32,160,96,0.12)' : 'rgba(0,0,0,0.05)',
+                  color: p.is_ready ? 'var(--green-primary)' : 'var(--text-muted)',
+                  border: `1px solid ${p.is_ready ? 'var(--green-primary)' : 'rgba(0,0,0,0.1)'}`,
                 }}>
                   {p.is_ready ? '✓ Ready' : 'Not Ready'}
                 </div>
@@ -387,20 +387,20 @@ function WaitingRoom({
                 style={{
                   display: 'flex', alignItems: 'center', gap: 10,
                   padding: '12px 14px', borderRadius: 10,
-                  border: '1px dashed rgba(255,255,255,0.07)',
+                  border: '1px dashed rgba(0,0,0,0.15)',
                 }}
               >
-                <div style={{ width: 38, height: 38, borderRadius: '50%', background: 'rgba(255,255,255,0.04)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 23, color: '#334155' }}>
+                <div style={{ width: 38, height: 38, borderRadius: '50%', background: 'rgba(0,0,0,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 23, color: 'var(--text-muted)' }}>
                   +
                 </div>
-                <div style={{ fontSize: 16, color: '#334155' }}>Waiting for player...</div>
+                <div style={{ fontSize: 16, color: 'var(--text-muted)' }}>Waiting for player...</div>
               </div>
             ))}
           </div>
         </Card>
 
         {roomPlayers.length < 2 && (
-          <div style={{ fontSize: 16, color: '#475569', textAlign: 'center', marginBottom: 14 }}>
+          <div style={{ fontSize: 16, color: 'var(--text-muted)', textAlign: 'center', marginBottom: 14 }}>
             Need at least 2 players to start
           </div>
         )}
@@ -434,7 +434,7 @@ function WaitingRoom({
         </div>
 
         {isHost && nonHostPlayers.length > 0 && !allReady && (
-          <p style={{ fontSize: 15, color: '#475569', textAlign: 'center', marginTop: 12 }}>
+          <p style={{ fontSize: 15, color: 'var(--text-muted)', textAlign: 'center', marginTop: 12 }}>
             All other players must click "Ready Up!" before you can start
           </p>
         )}

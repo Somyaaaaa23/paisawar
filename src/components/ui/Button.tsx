@@ -9,17 +9,17 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export function Button({ variant = 'primary', size = 'md', children, loading, className = '', disabled, ...props }: ButtonProps) {
   const variantStyle = {
-    primary: { background: '#2563eb', color: '#fff' },
-    secondary: { background: '#1f2a3d', color: '#f1f5f9', border: '1px solid rgba(255,255,255,0.1)' },
-    ghost: { background: 'transparent', color: '#94a3b8' },
-    danger: { background: '#dc2626', color: '#fff' },
-    gold: { background: '#f59e0b', color: '#000' },
+    primary: { background: 'var(--green-action)', color: 'var(--white)', border: '1px solid var(--green-bright)' },
+    secondary: { background: 'var(--green-deep)', color: 'var(--green-light)', border: '1px solid var(--green-primary)' },
+    ghost: { background: 'transparent', color: 'var(--gray-light)' },
+    danger: { background: 'var(--orange-primary)', color: 'var(--white)', border: '1px solid var(--orange-bright)' },
+    gold: { background: 'var(--gold)', color: 'var(--green-black)', border: '1px solid var(--coin-orange)' },
   }
 
   const sizeStyle = {
-    sm: { padding: '6px 12px', fontSize: '16px' },
-    md: { padding: '10px 20px', fontSize: '18px' },
-    lg: { padding: '14px 28px', fontSize: '20px' },
+    sm: { padding: '6px 12px', fontSize: '15px' },
+    md: { padding: '10px 20px', fontSize: '17px' },
+    lg: { padding: '14px 28px', fontSize: '19px' },
   }
 
   return (

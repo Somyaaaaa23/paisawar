@@ -91,21 +91,21 @@ export function PlayerBoard({ player, isCurrent, isMe, isTarget, isOffline, weal
         x: isShaking ? [-5, 5, -5, 5, -2, 2, 0] : 0,
       }}
       transition={{ x: { duration: 0.35 }, default: { duration: 0.4, ease: 'easeOut' } }}
-      whileHover={isTarget ? { scale: 1.04, y: -4 } : isCurrent ? { y: -2 } : {}}
-      whileTap={isTarget ? { scale: 0.97 } : {}}
+      whileHover={isTarget ? { scale: 1.05, y: -5 } : { y: -2 }}
+      whileTap={isTarget ? { scale: 0.95 } : {}}
       onClick={isTarget ? onClick : undefined}
       style={{
         background: theme.bg,
-        border: `2px solid ${isCurrent ? theme.accent : isTarget ? '#ef4444' : theme.border}`,
-        borderRadius: 20,
-        padding: '16px 14px 14px',
+        border: `2px solid ${isCurrent ? '#fef08a' : theme.border}`,
+        borderRadius: 16,
+        padding: '16px 12px',
         cursor: isTarget ? 'pointer' : 'default',
         position: 'relative',
         opacity: isOffline ? 0.55 : 1,
         boxShadow: isCurrent
-          ? `0 0 28px ${theme.glow}, 0 4px 20px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.08)`
+          ? `0 0 0 2px #fef08a, 0 8px 24px ${theme.glow}`
           : isTarget
-          ? '0 0 24px rgba(239,68,68,0.4), 0 4px 16px rgba(0,0,0,0.5)'
+          ? '0 0 0 2px #ef4444, 0 8px 24px rgba(239, 68, 68, 0.4)'
           : '0 4px 16px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05)',
         minWidth: 165,
         maxWidth: 210,

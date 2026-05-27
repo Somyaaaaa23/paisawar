@@ -306,25 +306,25 @@ function SetupScreen({ mode, botCount, setBotCount, onStart, onBack }: { mode: s
   return (
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
       <div style={{ width: '100%', maxWidth: 480, animation: 'slideUp 0.4s ease' }}>
-        <button onClick={onBack} style={{ background: 'none', border: 'none', color: '#64748b', cursor: 'pointer', fontSize: 16, fontFamily: 'inherit', marginBottom: 24, display: 'flex', alignItems: 'center', gap: 6 }}>
+        <button onClick={onBack} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontSize: 16, fontFamily: 'inherit', marginBottom: 24, display: 'flex', alignItems: 'center', gap: 6 }}>
           ← Back
         </button>
-        <h1 style={{ fontSize: 35, fontWeight: 800, color: '#f1f5f9', fontFamily: 'Space Grotesk, sans-serif', marginBottom: 8 }}>New Game</h1>
-        <div style={{ display: 'inline-block', padding: '4px 12px', borderRadius: 6, background: mode === 'ranked' ? 'rgba(37,99,235,0.2)' : 'rgba(16,185,129,0.15)', color: mode === 'ranked' ? '#60a5fa' : '#34d399', fontSize: 15, fontWeight: 700, textTransform: 'uppercase', marginBottom: 28 }}>
+        <h1 style={{ fontSize: 35, fontWeight: 800, color: 'var(--text-dark)', fontFamily: 'Space Grotesk, sans-serif', marginBottom: 8 }}>New Game</h1>
+        <div style={{ display: 'inline-block', padding: '4px 12px', borderRadius: 6, background: mode === 'ranked' ? 'rgba(37,99,235,0.15)' : 'rgba(16,185,129,0.15)', color: mode === 'ranked' ? 'var(--blue-deep)' : 'var(--green-primary)', fontSize: 15, fontWeight: 700, textTransform: 'uppercase', marginBottom: 28 }}>
           {mode} mode
         </div>
 
         <div className="glass-panel" style={{ borderRadius: 16, padding: 28, marginBottom: 20 }}>
-          <h3 style={{ fontSize: 19, fontWeight: 700, color: '#f1f5f9', marginBottom: 16 }}>AI Opponents</h3>
+          <h3 style={{ fontSize: 19, fontWeight: 700, color: 'var(--text-dark)', marginBottom: 16 }}>AI Opponents</h3>
           <div style={{ display: 'flex', gap: 10 }}>
             {[1, 2, 3].map(n => (
               <button
                 key={n}
                 onClick={() => setBotCount(n)}
                 style={{
-                  width: 48, height: 48, borderRadius: 10, border: `2px solid ${botCount === n ? '#2563eb' : 'rgba(255,255,255,0.1)'}`,
-                  background: botCount === n ? 'rgba(37,99,235,0.2)' : 'transparent',
-                  color: botCount === n ? '#60a5fa' : '#94a3b8', fontWeight: 700, fontSize: 20,
+                  width: 48, height: 48, borderRadius: 10, border: `2px solid ${botCount === n ? 'var(--blue-primary)' : 'rgba(0,0,0,0.1)'}`,
+                  background: botCount === n ? 'rgba(37,99,235,0.1)' : 'transparent',
+                  color: botCount === n ? 'var(--blue-deep)' : 'var(--text-muted)', fontWeight: 700, fontSize: 20,
                   cursor: 'pointer', transition: 'all 0.15s', fontFamily: 'inherit',
                 }}
               >
@@ -332,13 +332,13 @@ function SetupScreen({ mode, botCount, setBotCount, onStart, onBack }: { mode: s
               </button>
             ))}
           </div>
-          <p style={{ fontSize: 15, color: '#64748b', marginTop: 10 }}>Playing against {botCount} AI opponent{botCount > 1 ? 's' : ''} ({botCount + 1} players total)</p>
+          <p style={{ fontSize: 15, color: 'var(--text-muted)', marginTop: 10 }}>Playing against {botCount} AI opponent{botCount > 1 ? 's' : ''} ({botCount + 1} players total)</p>
         </div>
 
-        <div className="glass-panel" style={{ padding: '14px 16px', marginBottom: 24, fontSize: 16, color: '#64748b', borderRadius: 12, boxShadow: 'none' }}>
+        <div className="glass-panel" style={{ padding: '14px 16px', marginBottom: 24, fontSize: 16, color: 'var(--text-muted)', borderRadius: 12, boxShadow: 'none' }}>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-            <div>🎯 Race to <span style={{ color: '#f59e0b', fontWeight: 700 }}>₹50 Lakhs</span></div>
-            <div>⏱ <span style={{ color: '#f1f5f9', fontWeight: 600 }}>25 min</span> time limit</div>
+            <div>🎯 Race to <span style={{ color: 'var(--orange-dark)', fontWeight: 700 }}>₹50 Lakhs</span></div>
+            <div>⏱ <span style={{ color: 'var(--text-dark)', fontWeight: 600 }}>25 min</span> time limit</div>
           </div>
         </div>
 
@@ -354,42 +354,42 @@ function ResultScreen({ isWinner, placement, finalWealth, rpChange, players, mod
   const sorted = [...players].sort((a, b) => b.wealth - a.wealth)
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0e1a', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
+    <div style={{ minHeight: '100vh', background: 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
       {isWinner && <Confetti width={window.innerWidth} height={window.innerHeight} recycle={false} numberOfPieces={500} colors={['#f59e0b', '#10b981', '#3b82f6', '#ec4899', '#f1f5f9']} />}
       <div style={{ width: '100%', maxWidth: 500, textAlign: 'center', animation: 'slideUp 0.4s ease', zIndex: 10 }}>
         <div style={{ fontSize: 80, marginBottom: 16 }}>
           {isWinner ? '🏆' : placement === 2 ? '🥈' : placement === 3 ? '🥉' : '💪'}
         </div>
-        <h1 style={{ fontSize: 40, fontWeight: 800, fontFamily: 'Space Grotesk, sans-serif', color: isWinner ? '#f59e0b' : nearMiss ? '#f97316' : '#f1f5f9', marginBottom: 8 }}>
+        <h1 style={{ fontSize: 40, fontWeight: 800, fontFamily: 'Space Grotesk, sans-serif', color: isWinner ? 'var(--orange-dark)' : nearMiss ? 'var(--orange-primary)' : 'var(--text-dark)', marginBottom: 8 }}>
           {isWinner ? 'Victory!' : nearMiss ? 'So Close! 😤' : `${placement === 2 ? '2nd' : placement === 3 ? '3rd' : `${placement}th`} Place`}
         </h1>
         {nearMiss && wealthGap !== undefined && (
-          <p style={{ color: '#f97316', fontSize: 18, fontWeight: 600, marginBottom: 8 }}>
+          <p style={{ color: 'var(--orange-primary)', fontSize: 18, fontWeight: 600, marginBottom: 8 }}>
             You were just {formatWealth(wealthGap)} away from winning!
           </p>
         )}
-        <p style={{ color: '#94a3b8', marginBottom: 28, fontSize: 20 }}>Final wealth: {formatWealth(finalWealth)}</p>
+        <p style={{ color: 'var(--text-muted)', marginBottom: 28, fontSize: 20 }}>Final wealth: {formatWealth(finalWealth)}</p>
 
         {mode === 'ranked' && (
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '10px 24px', borderRadius: 12, background: rpChange > 0 ? 'rgba(16,185,129,0.1)' : 'rgba(239,68,68,0.1)', border: `1px solid ${rpChange > 0 ? 'rgba(16,185,129,0.3)' : 'rgba(239,68,68,0.3)'}`, marginBottom: 28 }}>
-            <span style={{ fontSize: 20, fontWeight: 800, color: rpChange > 0 ? '#10b981' : '#ef4444', fontFamily: 'Space Grotesk, sans-serif' }}>
+            <span style={{ fontSize: 20, fontWeight: 800, color: rpChange > 0 ? 'var(--green-primary)' : 'var(--orange-primary)', fontFamily: 'Space Grotesk, sans-serif' }}>
               {rpChange > 0 ? '+' : ''}{rpChange} RP
             </span>
           </div>
         )}
 
         {/* Final Rankings */}
-        <div style={{ background: '#1a2235', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 16, padding: 20, marginBottom: 24 }}>
-          <h3 style={{ fontSize: 18, fontWeight: 700, color: '#64748b', marginBottom: 12, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Final Rankings</h3>
+        <div style={{ background: 'rgba(255,255,255,0.4)', border: '1px solid rgba(0,0,0,0.1)', borderRadius: 16, padding: 20, marginBottom: 24 }}>
+          <h3 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text-muted)', marginBottom: 12, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Final Rankings</h3>
           {sorted.map((p, i) => (
-            <div key={p.id} style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0', borderBottom: i < sorted.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none' }}>
+            <div key={p.id} style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0', borderBottom: i < sorted.length - 1 ? '1px solid rgba(0,0,0,0.05)' : 'none' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <span style={{ fontSize: 23 }}>{i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `#${i + 1}`}</span>
-                <span style={{ fontSize: 18, fontWeight: p.id === 'human' || !p.isBot ? 700 : 400, color: !p.isBot ? '#60a5fa' : '#f1f5f9' }}>
+                <span style={{ fontSize: 18, fontWeight: p.id === 'human' || !p.isBot ? 700 : 400, color: !p.isBot ? 'var(--blue-deep)' : 'var(--text-dark)' }}>
                   {p.name}
                 </span>
               </div>
-              <span style={{ fontSize: 18, fontWeight: 700, color: '#10b981', fontFamily: 'Space Grotesk, sans-serif' }}>{formatWealth(p.wealth)}</span>
+              <span style={{ fontSize: 18, fontWeight: 700, color: 'var(--green-primary)', fontFamily: 'Space Grotesk, sans-serif' }}>{formatWealth(p.wealth)}</span>
             </div>
           ))}
         </div>
