@@ -11,10 +11,10 @@ const FEATURE_CARDS = [
 ]
 
 const PREVIEW_CARDS = [
-  { name: 'Diwali Bonus', type: 'decision', color: '#209060', icon: '🟢', tier: 'COMMON' },
-  { name: 'Market Crash', type: 'action', color: '#E05020', icon: '🔴', tier: 'RARE' },
-  { name: 'Emergency Fund', type: 'defense', color: '#1070C0', icon: '🔵', tier: 'COMMON' },
-  { name: 'The Black Swan', type: 'action', color: '#FFD050', icon: '⚡', tier: 'LEGENDARY' },
+  { name: 'Diwali Bonus', type: 'decision', color: '#209060', icon: '🟢', tier: 'COMMON', effect: '+₹50,000', desc: 'Gain wealth' },
+  { name: 'Market Crash', type: 'action', color: '#E05020', icon: '🔴', tier: 'RARE', effect: '-20%', desc: 'All lose wealth' },
+  { name: 'Emergency Fund', type: 'defense', color: '#1070C0', icon: '🔵', tier: 'COMMON', effect: 'BLOCK', desc: 'Stop an attack' },
+  { name: 'The Black Swan', type: 'action', color: '#FFD050', icon: '⚡', tier: 'LEGENDARY', effect: 'CRISIS', desc: 'Extreme event' },
 ]
 
 export function Landing() {
@@ -55,7 +55,6 @@ export function Landing() {
 
         <div style={{ animation: 'fadeIn 0.6s ease forwards', position: 'relative' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '6px 16px', borderRadius: 999, border: '1px solid rgba(224,80,32,0.3)', background: 'rgba(224,80,32,0.08)', marginBottom: 24 }}>
-            <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--orange-primary)', display: 'inline-block', animation: 'pulse 2s infinite' }} />
             <span style={{ fontSize: 15, color: 'var(--orange-dark)', fontWeight: 600, letterSpacing: '0.05em' }}>THE MONEY DECISION GAME</span>
           </div>
 
@@ -100,7 +99,10 @@ export function Landing() {
               <div style={{ fontSize: 16, fontWeight: 800, color: 'var(--text-soft-black)', fontFamily: 'var(--font-display)', lineHeight: 1.2 }}>
                 {card.name}
               </div>
-              <div style={{ flex: 1, borderRadius: 6, background: 'rgba(0,0,0,0.03)', border: `1px solid ${card.color}33` }} />
+              <div style={{ flex: 1, borderRadius: 6, background: 'rgba(255,255,255,0.5)', border: `1px solid ${card.color}33`, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '4px 8px', textAlign: 'center' }}>
+                <div style={{ fontSize: 15, fontWeight: 800, color: card.color === '#FFD050' ? '#d97706' : card.color }}>{card.effect}</div>
+                <div style={{ fontSize: 10, color: 'var(--text-muted)', marginTop: 4, lineHeight: 1.2 }}>{card.desc}</div>
+              </div>
             </div>
           ))}
         </div>

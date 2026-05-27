@@ -231,7 +231,12 @@ export function processDecision(state: GameState, playerIndex: number, choice: D
   }
 
   // applyEffect handles doubleInvestActive bonus internally
+  const oldWealth = state.players[playerIndex].wealth
   let newState = applyEffect(state, scaledEffect, playerIndex, playerIndex)
+  const newWealth = newState.players[playerIndex].wealth
+  const diff = newWealth - oldWealth
+  const diffStr = diff > 0 ? ` (+₹${Math.abs(diff).toLocaleString()})` : diff < 0 ? ` (-₹${Math.abs(diff).toLocaleString()})` : ''
+  
   // Clear doubleInvestActive after use, and increment investChoices if choice was invest
   const players = newState.players.map((p, i) =>
     i === playerIndex ? { 
@@ -248,7 +253,7 @@ export function processDecision(state: GameState, playerIndex: number, choice: D
     i === playerIndex ? { ...p, hand } : p
   )
 
-  let logEntry = `${state.players[playerIndex].name} played ${card.name} → ${choice.toUpperCase()}`
+  let logEntry = `${state.players[playerIndex].name} played ${card.name} → ${choice.toUpperCase()}${diffStr}`
   if (riskFired) logEntry += ' 📉 (Investment Failed!)'
   if (seasonBoost !== 1.0 && !riskFired) logEntry += ' ⚡ (Season Boost!)'
 
@@ -284,6 +289,9 @@ export function processAction(state: GameState, playerIndex: number, card: GameC
   }
 
   // Only apply the attack effect if it was NOT defended
+  const oldSourceWealth = state.players[playerIndex].wealth
+  const oldTargetWealth = state.players[targetIndex].wealth
+
   let newState = { ...state, players: updatedPlayersForDefense, discardPile }
   if (!isDefended) {
     newState = applyEffect(newState, card.effect, playerIndex, targetIndex)
@@ -293,6 +301,15 @@ export function processAction(state: GameState, playerIndex: number, card: GameC
       newState.players[targetIndex] = { ...p, emiDamageTaken: true };
     }
   }
+
+  const newSourceWealth = newState.players[playerIndex].wealth
+  const newTargetWealth = newState.players[targetIndex].wealth
+  const targetDiff = newTargetWealth - oldTargetWealth
+  const sourceDiff = newSourceWealth - oldSourceWealth
+
+  const targetDiffStr = targetDiff < 0 ? ` (-₹${Math.abs(targetDiff).toLocaleString()})` : targetDiff > 0 ? ` (+₹${Math.abs(targetDiff).toLocaleString()})` : ''
+  const sourceDiffStr = sourceDiff > 0 ? ` (+₹${Math.abs(sourceDiff).toLocaleString()})` : ''
+
 
   // Now process the played action card
   const finalDiscard = [...newState.discardPile, card]
@@ -304,7 +321,7 @@ export function processAction(state: GameState, playerIndex: number, card: GameC
   const targetName = state.players[targetIndex].name
   let logEntry = card.effect.target === 'all' || card.effect.target === 'others'
     ? `${state.players[playerIndex].name} played ${card.name} — affects all!`
-    : `${state.players[playerIndex].name} played ${card.name} → ${targetName}`
+    : `${state.players[playerIndex].name} played ${card.name} → ${targetName}${targetDiffStr}${sourceDiffStr}`
 
   if (isDefended) {
     logEntry += ` 🛡️ (${targetName} Auto-Defended!)`

@@ -184,12 +184,12 @@ export function GameCard({ card, onClick, selected, disabled, compact, faceDown 
 
       {/* Title */}
       <div style={{
-        fontSize: compact ? 10 : 12,
+        fontSize: compact ? 12 : 15,
         fontWeight: 800,
         color: '#1f2937',
         textAlign: 'center',
         lineHeight: 1.1,
-        marginTop: 2,
+        marginTop: 4,
       }}>
         {card.name}
       </div>
@@ -197,12 +197,12 @@ export function GameCard({ card, onClick, selected, disabled, compact, faceDown 
       {/* Description */}
       {!compact && (
         <div style={{
-          fontSize: 9,
+          fontSize: 11,
           color: '#4b5563',
           textAlign: 'center',
-          lineHeight: 1.2,
+          lineHeight: 1.3,
           display: '-webkit-box',
-          WebkitLineClamp: 3,
+          WebkitLineClamp: 4,
           WebkitBoxOrient: 'vertical',
           overflow: 'hidden',
           padding: '0 4px',

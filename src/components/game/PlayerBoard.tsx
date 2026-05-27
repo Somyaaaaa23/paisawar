@@ -121,12 +121,12 @@ export function PlayerBoard({ player, isCurrent, isMe, isTarget, isOffline, weal
           <motion.div
             key={ft.id}
             initial={{ opacity: 1, y: 0, scale: 1 }}
-            animate={{ opacity: 0, y: -52, scale: 1.25 }}
+            animate={{ opacity: 0, y: -80, scale: 1.4 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.4, ease: 'easeOut' }}
+            transition={{ duration: 2.0, ease: 'easeOut' }}
             style={{
               position: 'absolute', top: 20, right: 12, zIndex: 50,
-              fontSize: 20, fontWeight: 900, fontFamily: 'Space Grotesk, sans-serif',
+              fontSize: 28, fontWeight: 900, fontFamily: 'Space Grotesk, sans-serif',
               color: ft.diff > 0 ? '#4ade80' : '#f87171',
               pointerEvents: 'none',
               textShadow: '0 2px 8px rgba(0,0,0,0.7)',

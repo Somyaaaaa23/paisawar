@@ -47,7 +47,7 @@ export function GameBoard({
       {/* LEFT COLUMN: Players & Action */}
       <div style={{ flex: '1 1 900px', display: 'flex', flexDirection: 'column', gap: 16 }}>
         {/* Players */}
-        <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: 40, flexWrap: 'wrap' }}>
           {gameState.players.map((player, i) => (
             <div key={player.id}>
               <PlayerBoard
