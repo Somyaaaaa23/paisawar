@@ -94,11 +94,11 @@ export function PlayerBoard({ player, isCurrent, isMe, isTarget, isOffline, weal
       whileHover={isTarget ? { scale: 1.05, y: -5 } : { y: -2 }}
       whileTap={isTarget ? { scale: 0.95 } : {}}
       onClick={isTarget ? onClick : undefined}
+      className="player-board-wrapper"
       style={{
         background: theme.bg,
         border: `2px solid ${isCurrent ? '#fef08a' : theme.border}`,
         borderRadius: 16,
-        padding: '16px 12px',
         cursor: isTarget ? 'pointer' : 'default',
         position: 'relative',
         opacity: isOffline ? 0.55 : 1,
@@ -107,8 +107,6 @@ export function PlayerBoard({ player, isCurrent, isMe, isTarget, isOffline, weal
           : isTarget
           ? '0 0 0 2px #ef4444, 0 8px 24px rgba(239, 68, 68, 0.4)'
           : '0 4px 16px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05)',
-        minWidth: 165,
-        maxWidth: 210,
         flexShrink: 0,
         userSelect: 'none',
         backdropFilter: 'blur(8px)',
@@ -198,25 +196,16 @@ export function PlayerBoard({ player, isCurrent, isMe, isTarget, isOffline, weal
 
       {/* Avatar + Name row */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-        {/* Avatar circle */}
-        <div style={{
-          width: 52, height: 52, borderRadius: '50%',
-          background: theme.nameBg,
-          border: `2px solid ${theme.accent}`,
+        <div className="player-board-avatar" style={{
+          width: '2.5em', height: '2.5em', borderRadius: '50%',
+          background: 'rgba(255,255,255,0.1)', border: `2px solid ${theme.accent}`,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: 28, flexShrink: 0,
-          boxShadow: `0 0 12px ${theme.glow}`,
+          boxShadow: `0 4px 12px rgba(0,0,0,0.3)`
         }}>
           {avatar}
         </div>
-
-        {/* Name + status */}
-        <div style={{ minWidth: 0, flex: 1 }}>
-          <div style={{
-            fontSize: 15, fontWeight: 800, color: '#f1f5f9',
-            fontFamily: 'Space Grotesk, sans-serif',
-            whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
-          }}>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontSize: 'clamp(14px, 3.5vw, 16px)', fontWeight: 800, color: '#f1f5f9', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
             {player.name}
             {isMe && <span style={{ color: theme.accent, marginLeft: 4, fontSize: 12 }}>(You)</span>}
           </div>
@@ -232,23 +221,20 @@ export function PlayerBoard({ player, isCurrent, isMe, isTarget, isOffline, weal
         </div>
       </div>
 
-      {/* Wealth display */}
-      <div style={{
-        fontSize: 26, fontWeight: 900,
-        fontFamily: 'Space Grotesk, sans-serif',
-        color: theme.accent,
-        letterSpacing: '-0.02em',
-        lineHeight: 1,
-        marginBottom: 4,
-        textShadow: `0 0 20px ${theme.glow}`,
-      }}>
-        {formatWealth(player.wealth)}
+      {/* Wealth Row */}
+      <div style={{ background: 'rgba(0,0,0,0.2)', borderRadius: 12, padding: 'clamp(6px, 2vw, 10px)', display: 'flex', alignItems: 'center', gap: 8, border: '1px solid rgba(255,255,255,0.05)' }}>
+        <RupeeShield color={theme.accent} />
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <span style={{ fontSize: 'clamp(18px, 4.5vw, 22px)', fontWeight: 800, fontFamily: 'Space Grotesk, sans-serif', color: theme.accent, lineHeight: 1 }}>
+            {formatWealth(player.wealth)}
+          </span>
+        </div>
       </div>
 
       {/* Progress bar */}
       <div style={{
         height: 4, background: 'rgba(255,255,255,0.08)',
-        borderRadius: 2, overflow: 'hidden', marginBottom: 10,
+        borderRadius: 2, overflow: 'hidden', marginBottom: 10, marginTop: 10,
       }}>
         <motion.div
           animate={{ width: `${wealthPct}%` }}

@@ -65,9 +65,8 @@ export function GameCard({ card, onClick, selected, disabled, compact, faceDown 
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
+        className={compact ? 'game-card-compact' : 'game-card-normal'}
         style={{
-          width: compact ? 80 : 140,
-          height: compact ? 110 : 200,
           borderRadius: compact ? 12 : 16,
           display: 'flex',
           alignItems: 'center',
@@ -83,10 +82,7 @@ export function GameCard({ card, onClick, selected, disabled, compact, faceDown 
     )
   }
 
-  // Base dimensions
-  const width = compact ? 90 : 140
-  const height = compact ? 120 : 200
-  const padding = compact ? '8px' : '12px'
+  // Base dimensions and padding are now handled by CSS classes
 
   return (
     <motion.button
@@ -100,18 +96,15 @@ export function GameCard({ card, onClick, selected, disabled, compact, faceDown 
       whileHover={onClick && !disabled && !selected ? { y: -5, scale: 1.05, boxShadow: '0 12px 24px rgba(0,0,0,0.15)' } : {}}
       whileTap={onClick && !disabled ? { scale: 0.95 } : {}}
       onClick={!disabled ? onClick : undefined}
+      className={compact ? 'game-card-compact' : 'game-card-normal'}
       style={{
-        width,
-        height,
         background: colors.bg,
         border: `2px solid ${selected ? '#eab308' : colors.border}`,
         borderRadius: compact ? 12 : 16,
         cursor: onClick && !disabled ? 'pointer' : 'default',
-        padding,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        gap: compact ? 4 : 8,
         boxShadow: selected ? '0 0 0 2px #fef08a, 0 8px 16px rgba(0,0,0,0.1)' : '0 4px 6px -1px rgba(0,0,0,0.1)',
         flexShrink: 0,
         position: 'relative',

@@ -330,7 +330,7 @@ function LeaderboardTab({ leaderboard, loading, profile, onRefresh }: { leaderbo
             <thead>
               <tr style={{ borderBottom: '1px solid rgba(0,0,0,0.1)' }}>
                 {['Rank', 'Player', 'Wins', 'Games', 'Win %', 'Best Wealth'].map(h => (
-                  <th key={h} style={{ padding: '10px 12px', textAlign: 'left', fontSize: 15, color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{h}</th>
+                  <th key={h} style={{ padding: 'clamp(8px, 2vw, 12px)', textAlign: 'left', fontSize: 15, color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{h}</th>
                 ))}
               </tr>
             </thead>
@@ -340,16 +340,16 @@ function LeaderboardTab({ leaderboard, loading, profile, onRefresh }: { leaderbo
                 const winRate = player.total_games > 0 ? Math.round((player.wins / player.total_games) * 100) : 0
                 return (
                   <tr key={player.id} style={{ borderBottom: '1px solid rgba(0,0,0,0.05)', background: isMe ? 'rgba(32,160,96,0.08)' : 'transparent' }}>
-                    <td style={{ padding: '12px', fontSize: 18, fontWeight: 700, color: i === 0 ? 'var(--orange-dark)' : i === 1 ? 'var(--text-muted)' : i === 2 ? 'var(--orange-primary)' : 'var(--text-muted)' }}>
+                    <td style={{ padding: 'clamp(8px, 2vw, 12px)', fontSize: 'clamp(15px, 4vw, 18px)', fontWeight: 700, color: i === 0 ? 'var(--orange-dark)' : i === 1 ? 'var(--text-muted)' : i === 2 ? 'var(--orange-primary)' : 'var(--text-muted)' }}>
                       {i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `#${i + 1}`}
                     </td>
-                    <td style={{ padding: '12px', fontSize: 18, color: 'var(--text-dark)', fontWeight: isMe ? 700 : 400 }}>
+                    <td style={{ padding: 'clamp(8px, 2vw, 12px)', fontSize: 'clamp(15px, 4vw, 18px)', color: 'var(--text-dark)', fontWeight: isMe ? 700 : 400 }}>
                       {player.username} {isMe && <span style={{ fontSize: 14, color: 'var(--green-primary)', marginLeft: 6 }}>(you)</span>}
                     </td>
-                    <td style={{ padding: '12px', fontSize: 18, fontWeight: 700, color: 'var(--green-primary)' }}>{player.wins}</td>
-                    <td style={{ padding: '12px', fontSize: 16, color: 'var(--text-muted)' }}>{player.total_games}</td>
-                    <td style={{ padding: '12px', fontSize: 16, color: winRate > 60 ? 'var(--green-primary)' : 'var(--text-muted)' }}>{winRate}%</td>
-                    <td style={{ padding: '12px', fontSize: 16, color: 'var(--orange-dark)', fontWeight: 600 }}>{formatWealth(player.highest_net_worth)}</td>
+                    <td style={{ padding: 'clamp(8px, 2vw, 12px)', fontSize: 'clamp(15px, 4vw, 18px)', fontWeight: 700, color: 'var(--green-primary)' }}>{player.wins}</td>
+                    <td style={{ padding: 'clamp(8px, 2vw, 12px)', fontSize: 'clamp(14px, 3.5vw, 16px)', color: 'var(--text-muted)' }}>{player.total_games}</td>
+                    <td style={{ padding: 'clamp(8px, 2vw, 12px)', fontSize: 'clamp(14px, 3.5vw, 16px)', color: winRate > 60 ? 'var(--green-primary)' : 'var(--text-muted)' }}>{winRate}%</td>
+                    <td style={{ padding: 'clamp(8px, 2vw, 12px)', fontSize: 'clamp(14px, 3.5vw, 16px)', color: 'var(--orange-dark)', fontWeight: 600 }}>{formatWealth(player.highest_net_worth)}</td>
                   </tr>
                 )
               })}

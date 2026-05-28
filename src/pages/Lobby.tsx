@@ -310,18 +310,18 @@ function WaitingRoom({
           <div
             onClick={copyCode}
             style={{
-              display: 'inline-flex', alignItems: 'center', gap: 14,
+              display: 'inline-flex', alignItems: 'center', gap: 'clamp(8px, 2vw, 14px)',
               background: 'rgba(0,0,0,0.05)', border: '2px solid var(--orange-dark)',
-              borderRadius: 16, padding: '16px 32px', cursor: 'pointer',
+              borderRadius: 16, padding: 'clamp(10px, 3vw, 16px) clamp(16px, 4vw, 32px)', cursor: 'pointer',
               transition: 'all 0.2s', userSelect: 'none',
             }}
             onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'var(--orange-primary)' }}
             onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = 'var(--orange-dark)' }}
           >
-            <span style={{ fontSize: 45, fontWeight: 800, letterSpacing: '0.25em', color: 'var(--orange-dark)', fontFamily: 'var(--font-display)' }}>
+            <span style={{ fontSize: 'clamp(30px, 8vw, 45px)', fontWeight: 800, letterSpacing: '0.2em', color: 'var(--orange-dark)', fontFamily: 'var(--font-display)' }}>
               {room.code}
             </span>
-            <span style={{ fontSize: 15, color: copied ? 'var(--green-primary)' : 'var(--text-muted)', fontWeight: 600, whiteSpace: 'nowrap' }}>
+            <span style={{ fontSize: 'clamp(12px, 3.5vw, 15px)', color: copied ? 'var(--green-primary)' : 'var(--text-muted)', fontWeight: 600, whiteSpace: 'nowrap' }}>
               {copied ? '✓ Copied!' : 'Click to copy'}
             </span>
           </div>

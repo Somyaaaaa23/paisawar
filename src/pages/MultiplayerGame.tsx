@@ -454,10 +454,10 @@ export function MultiplayerGame() {
       <div style={{ minHeight: '100vh', background: 'var(--green-black)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
         {isWinner && <Confetti width={window.innerWidth} height={window.innerHeight} recycle={false} numberOfPieces={500} colors={['#f59e0b', '#10b981', '#3b82f6', '#ec4899', '#f1f5f9']} />}
         <div style={{ width: '100%', maxWidth: 520, textAlign: 'center', zIndex: 10 }}>
-          <div style={{ fontSize: 80, marginBottom: 16 }}>
+          <div style={{ fontSize: 'clamp(50px, 15vw, 80px)', marginBottom: 16 }}>
             {isWinner ? '🏆' : placement === 2 ? '🥈' : placement === 3 ? '🥉' : '💪'}
           </div>
-          <h1 style={{ fontSize: 40, fontWeight: 800, fontFamily: 'var(--font-display)', color: isWinner ? 'var(--gold)' : 'var(--green-light)', marginBottom: 8 }}>
+          <h1 style={{ fontSize: 'clamp(28px, 8vw, 40px)', fontWeight: 800, fontFamily: 'var(--font-display)', color: isWinner ? 'var(--gold)' : 'var(--green-light)', marginBottom: 8 }}>
             {isWinner ? 'Victory!' : `${placement}${ordinal} Place`}
           </h1>
           <p style={{ color: 'var(--gray)', marginBottom: 28, fontSize: 20 }}>

@@ -287,6 +287,32 @@ input, textarea, select {
   display: none; /* Chrome, Safari and Opera */
 }
 
+/* Card Sizing Utilities */
+.game-card-normal {
+  width: 140px !important;
+  height: 200px !important;
+  padding: 12px !important;
+  gap: 8px !important;
+  border-radius: 16px !important;
+}
+
+.game-card-compact {
+  width: 90px !important;
+  height: 120px !important;
+  padding: 8px !important;
+  gap: 4px !important;
+  border-radius: 12px !important;
+}
+
+.player-board-wrapper {
+  min-width: 165px !important;
+  max-width: 210px !important;
+  padding: 16px 12px !important;
+}
+.player-board-avatar {
+  font-size: 28px !important;
+}
+
 /* Base Responsive Rules */
 @media (max-width: 768px) {
   .mobile-only {
@@ -303,6 +329,27 @@ input, textarea, select {
   .game-board-layout {
     flex-direction: column !important;
     padding: 12px 16px !important;
+  }
+  .game-left-col, .game-right-col {
+    flex: 1 1 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+  
+  .player-board-wrapper {
+    min-width: 130px !important;
+    padding: 12px 8px !important;
+  }
+  .player-board-avatar {
+    font-size: 20px !important;
+  }
+
+  .game-card-normal {
+    width: 110px !important;
+    height: 155px !important;
+    padding: 8px !important;
+    gap: 6px !important;
+    border-radius: 14px !important;
   }
   .game-left-col, .game-right-col {
     flex: 1 1 100% !important;
@@ -356,9 +403,216 @@ input, textarea, select {
   }
 }
 
+@media (max-width: 414px) {
+  .game-card-normal {
+    width: 100px !important;
+    height: 140px !important;
+    padding: 6px !important;
+    gap: 4px !important;
+  }
+  .game-card-compact {
+    width: 80px !important;
+    height: 110px !important;
+    padding: 6px !important;
+  }
+  .player-board-wrapper {
+    min-width: 115px !important;
+  }
+}
+
 .players-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 12px;
 }
 
+/* =========================================
+   GLOBAL MOBILE FIXES (User Provided)
+========================================= */
+
+@media (max-width: 768px) {
+
+  html {
+    font-size: 14px;
+    overflow-x: hidden;
+  }
+
+  body {
+    overflow-x: hidden !important;
+    width: 100%;
+  }
+
+  * {
+    max-width: 100%;
+  }
+
+  img,
+  svg,
+  canvas,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+
+  button {
+    min-height: 44px;
+  }
+
+  /* =========================================
+     CONTAINERS
+  ========================================= */
+
+  .page-container,
+  .dashboard-container,
+  .main-container,
+  .game-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    overflow-x: hidden !important;
+  }
+
+  /* =========================================
+     HEADER / NAVBAR
+  ========================================= */
+
+  nav,
+  .navbar,
+  .topbar {
+    width: 100%;
+    padding: 10px 12px !important;
+    gap: 8px !important;
+    flex-wrap: wrap;
+  }
+
+  .navbar-logo,
+  .logo {
+    font-size: 1.6rem !important;
+  }
+
+  /* =========================================
+     PLAYER CARDS
+  ========================================= */
+
+  .players-container {
+    display: flex !important;
+    gap: 12px !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 10px;
+  }
+
+  .player-board-wrapper {
+    flex: 0 0 82% !important;
+    min-width: 82% !important;
+    max-width: 82% !important;
+    scroll-snap-align: center;
+    border-radius: 20px !important;
+  }
+
+  /* =========================================
+     GAME CARDS
+  ========================================= */
+
+  .game-card-normal {
+    width: 92px !important;
+    height: 132px !important;
+    border-radius: 14px !important;
+  }
+
+  .hand-container {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    gap: 10px !important;
+    padding-bottom: 10px !important;
+  }
+
+  /* =========================================
+     LEADERBOARD FIX
+  ========================================= */
+
+  .leaderboard-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 16px;
+  }
+
+  table {
+    min-width: 600px;
+  }
+
+  /* =========================================
+     MODALS / POPUPS
+  ========================================= */
+
+  .modal-content,
+  .popup-content {
+    width: 94vw !important;
+    max-width: 94vw !important;
+    padding: 18px !important;
+    border-radius: 20px !important;
+  }
+
+  /* =========================================
+     TYPOGRAPHY
+  ========================================= */
+
+  h1 {
+    font-size: 2rem !important;
+    line-height: 1.1 !important;
+  }
+
+  h2 {
+    font-size: 1.6rem !important;
+  }
+
+  h3 {
+    font-size: 1.2rem !important;
+  }
+
+  p,
+  span,
+  button {
+    font-size: 0.95rem !important;
+  }
+
+  /* =========================================
+     BUTTONS
+  ========================================= */
+
+  .primary-btn,
+  .secondary-btn,
+  button {
+    min-height: 48px !important;
+    border-radius: 14px !important;
+    padding: 12px 16px !important;
+  }
+
+  /* =========================================
+     GAME TURN SECTION
+  ========================================= */
+
+  .turn-panel {
+    padding: 18px !important;
+    border-radius: 22px !important;
+  }
+
+  /* =========================================
+     FIX EMPTY SPACING
+  ========================================= */
+
+  section,
+  .section {
+    margin-bottom: 18px !important;
+  }
+
+  /* =========================================
+     BOTTOM SAFE AREA
+  ========================================= */
+
+  .bottom-nav-spacer {
+    height: 90px;
+  }
+}

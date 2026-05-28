@@ -435,10 +435,10 @@ function ResultScreen({ isWinner, placement, finalWealth, rpChange, players, mod
     <div style={{ minHeight: '100vh', background: 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
       {isWinner && <Confetti width={window.innerWidth} height={window.innerHeight} recycle={false} numberOfPieces={500} colors={['#f59e0b', '#10b981', '#3b82f6', '#ec4899', '#f1f5f9']} />}
       <div style={{ width: '100%', maxWidth: 500, textAlign: 'center', animation: 'slideUp 0.4s ease', zIndex: 10 }}>
-        <div style={{ fontSize: 80, marginBottom: 16 }}>
+        <div style={{ fontSize: 'clamp(50px, 15vw, 80px)', marginBottom: 16 }}>
           {isWinner ? '🏆' : placement === 2 ? '🥈' : placement === 3 ? '🥉' : '💪'}
         </div>
-        <h1 style={{ fontSize: 40, fontWeight: 800, fontFamily: 'Space Grotesk, sans-serif', color: isWinner ? 'var(--orange-dark)' : nearMiss ? 'var(--orange-primary)' : 'var(--text-dark)', marginBottom: 8 }}>
+        <h1 style={{ fontSize: 'clamp(28px, 8vw, 40px)', fontWeight: 800, fontFamily: 'Space Grotesk, sans-serif', color: isWinner ? 'var(--orange-dark)' : nearMiss ? 'var(--orange-primary)' : 'var(--text-dark)', marginBottom: 8 }}>
           {isWinner ? 'Victory!' : nearMiss ? 'So Close! 😤' : `${placement === 2 ? '2nd' : placement === 3 ? '3rd' : `${placement}th`} Place`}
         </h1>
         {nearMiss && wealthGap !== undefined && (
