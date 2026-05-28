@@ -56,6 +56,7 @@ export function Game() {
   const [notification, setNotification] = useState<string | null>(null)
   const [showForfeitModal, setShowForfeitModal] = useState(false)
   const [popupInfo, setPopupInfo] = useState<{ reason: string, amountStr: string, isGain: boolean } | null>(null)
+  const handlePopupContinue = useCallback(() => setPopupInfo(null), [])
   const botTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const prevWealthRef = useRef(500000)
 
@@ -331,7 +332,7 @@ export function Game() {
       />
 
       {popupInfo && (
-        <EventPopup info={popupInfo} onContinue={() => setPopupInfo(null)} />
+        <EventPopup info={popupInfo} onContinue={handlePopupContinue} />
       )}
     </div>
   )
@@ -341,7 +342,7 @@ function EventPopup({ info, onContinue }: { info: { reason: string, amountStr: s
   useEffect(() => {
     const timer = setTimeout(() => {
       onContinue()
-    }, 1500)
+    }, 3000)
     return () => clearTimeout(timer)
   }, [onContinue])
 
