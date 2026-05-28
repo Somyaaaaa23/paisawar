@@ -282,7 +282,7 @@ export function processAction(state: GameState, playerIndex: number, card: GameC
       if (c.type !== 'defense') return false
       const effect = c.effect
       if (!effect || effect.type !== 'block_card') return false
-      return effect.blocks.includes('any') || effect.blocks.includes(card.name)
+      return !!(effect.blocks?.includes('any') || effect.blocks?.includes(card.name))
     })
     if (defCard) {
       isDefended = true
