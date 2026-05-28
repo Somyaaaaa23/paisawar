@@ -521,7 +521,7 @@ export function MultiplayerGame() {
         <button onClick={() => setShowForfeitModal(true)} style={{ background: 'none', border: 'none', color: '#64748b', cursor: 'pointer', fontSize: 14, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 6 }}>
           ← LEAVE
         </button>
-        <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 22, color: '#0f172a', position: 'absolute', left: '50%', transform: 'translateX(-50%)', letterSpacing: '-0.02em' }}>
+        <div className="desktop-only" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 22, color: '#0f172a', position: 'absolute', left: '50%', transform: 'translateX(-50%)', letterSpacing: '-0.02em' }}>
           PAISA<span style={{ color: '#10b981' }}>WAR</span>
         </div>
         <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>

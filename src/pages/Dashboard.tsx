@@ -158,7 +158,8 @@ export function Dashboard() {
         </aside>
         )}
 
-        <main style={{ flex: 1, padding: '24px', overflowY: 'auto', animation: 'fadeIn 0.3s ease', paddingBottom: '90px' }}>
+        {/* Main Content */}
+        <main style={{ flex: 1, minWidth: 0, padding: 'clamp(12px, 3vw, 24px)', overflowY: 'auto', animation: 'fadeIn 0.3s ease', paddingBottom: '90px' }}>
           {tab === 'home' && <HomeTab navigate={navigate} profile={profile} currentSeason={currentSeason} />}
           {tab === 'leaderboard' && <LeaderboardTab leaderboard={leaderboard} loading={leaderboardLoading} profile={profile} onRefresh={fetchLeaderboard} />}
           {tab === 'contracts' && <ContractsTab />}
