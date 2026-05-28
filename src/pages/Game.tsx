@@ -341,7 +341,7 @@ function EventPopup({ info, onContinue }: { info: { reason: string, amountStr: s
   useEffect(() => {
     const timer = setTimeout(() => {
       onContinue()
-    }, 3000)
+    }, 1500)
     return () => clearTimeout(timer)
   }, [onContinue])
 
