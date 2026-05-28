@@ -328,19 +328,23 @@ export function MultiplayerGame() {
     setGameState(forfeitState)
     gameStateRef.current = forfeitState
     
-    try {
-      await pushState(forfeitState)
-      await leaveRoom(roomId, myPlayerId).catch(() => {})
+    // Background the async tasks so navigation is instant
+    Promise.resolve().then(async () => {
+      try {
+        await pushState(forfeitState)
+        await leaveRoom(roomId, myPlayerId).catch(() => {})
 
-      // Record loss and deduct 25 coins
-      if (profile) {
-        await saveGameResult(profile.id, profile.username, false, 0, gs.players.length, gs.players.length, profile.win_streak ?? 0)
-        await supabase.from('profiles').update({ daanik_coins: Math.max(0, (profile.daanik_coins || 0) - 25) }).eq('id', profile.id)
-        await refreshProfile()
+        // Record loss and deduct 25 coins
+        if (profile) {
+          await saveGameResult(profile.id, profile.username, false, 0, gs.players.length, gs.players.length, profile.win_streak ?? 0)
+          await supabase.from('profiles').update({ daanik_coins: Math.max(0, (profile.daanik_coins || 0) - 25) }).eq('id', profile.id)
+        }
+      } catch (e) {
+        console.error(e)
       }
-    } finally {
-      navigate('/dashboard')
-    }
+    })
+    
+    navigate('/dashboard')
   }
 
   // ---- Render ----

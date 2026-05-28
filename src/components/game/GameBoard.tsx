@@ -88,7 +88,13 @@ export function GameBoard({
         <TurnTimer 
           turnStartTime={gameState.turnStartTime} 
           timeLimit={TURN_TIME_LIMIT_MS} 
-          active={gameState.phase !== 'game_over' && (isMyTurn || (!isMultiplayer && gameState.players[0].id === myPlayerId))} 
+          active={
+            gameState.phase !== 'game_over' && (
+              isMyTurn || 
+              (!isMultiplayer && gameState.players[0].id === myPlayerId) || 
+              (isMultiplayer && gameState.players[0].id === myPlayerId && !onlinePlayers.has(gameState.players[gameState.currentPlayerIndex]?.id))
+            )
+          }
           onTimeout={onTimeout} 
         />
 

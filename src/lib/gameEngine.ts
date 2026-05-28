@@ -298,12 +298,25 @@ export function processAction(state: GameState, playerIndex: number, card: GameC
   const oldTargetWealth = state.players[targetIndex].wealth
 
   let newState = { ...state, players: updatedPlayersForDefense, discardPile }
-  if (!isDefended) {
+  
+  if (card.effect.target === 'all' || card.effect.target === 'others') {
+    // AoE targets affect multiple players
+    for (let i = 0; i < newState.players.length; i++) {
+      if (card.effect.target === 'others' && i === playerIndex) continue;
+      // Note: Auto-defense is skipped for AoE in this version
+      newState = applyEffect(newState, card.effect, playerIndex, i)
+      if (card.id === 'ac_emi_bomb') {
+        const p = newState.players[i]
+        newState.players[i] = { ...p, emiDamageTaken: true }
+      }
+    }
+  } else if (!isDefended) {
+    // Single target attack
     newState = applyEffect(newState, card.effect, playerIndex, targetIndex)
     // If it was an EMI bomb, mark target as having taken EMI damage
     if (card.id === 'ac_emi_bomb') {
-      const p = newState.players[targetIndex];
-      newState.players[targetIndex] = { ...p, emiDamageTaken: true };
+      const p = newState.players[targetIndex]
+      newState.players[targetIndex] = { ...p, emiDamageTaken: true }
     }
   }
 
