@@ -13,6 +13,7 @@ import { saveGameResult } from '../lib/auth'
 import { playSound } from '../lib/audio'
 import Confetti from 'react-confetti'
 import { GameBoard, UIPhase } from '../components/game/GameBoard'
+import { supabase } from '../lib/supabase'
 
 type GamePhaseUI = 'setup' | UIPhase | 'result'
 
