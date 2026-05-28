@@ -278,7 +278,12 @@ export function processAction(state: GameState, playerIndex: number, card: GameC
 
   if (card.effect.target === 'target') {
     const target = state.players[targetIndex]
-    const defCard = target.hand.find(c => c.type === 'defense')
+    const defCard = target.hand.find(c => {
+      if (c.type !== 'defense') return false
+      const effect = c.effect
+      if (!effect || effect.type !== 'block_card') return false
+      return effect.blocks.includes('any') || effect.blocks.includes(card.name)
+    })
     if (defCard) {
       isDefended = true
       // Consume the defense card
@@ -371,19 +376,10 @@ function processPendingGains(state: GameState, playerIndex: number): GameState {
 }
 
 export function advanceTurn(state: GameState): GameState {
-  let newState = processPendingGains(state, state.currentPlayerIndex)
-
-  const checked = checkWinCondition(newState)
-  if (checked.winner) return checked
-
-  const elapsed = Date.now() - state.startTime
-  if (elapsed >= state.timeLimit) {
-    const winner = [...newState.players].sort((a, b) => b.wealth - a.wealth)[0]
-    return { ...checked, winner, phase: 'game_over', log: ['Time up! Highest wealth wins.', ...checked.log].slice(0, 20) }
-  }
-
-  let nextIndex = (newState.currentPlayerIndex + 1) % newState.players.length
+  // FIND NEXT ACTIVE PLAYER FIRST
+  let nextIndex = (state.currentPlayerIndex + 1) % state.players.length
   let loopCount = 0
+  let newState = state
   while ((newState.players[nextIndex].hasForfeited || newState.players[nextIndex].skippedTurns > 0) && loopCount < newState.players.length) {
     const p = newState.players[nextIndex]
     if (!p.hasForfeited) {
@@ -396,6 +392,18 @@ export function advanceTurn(state: GameState): GameState {
     }
     nextIndex = (nextIndex + 1) % newState.players.length
     loopCount++
+  }
+
+  // PROCESS PENDING GAINS FOR THE NEXT PLAYER
+  newState = processPendingGains(newState, nextIndex)
+
+  const checked = checkWinCondition(newState)
+  if (checked.winner) return checked
+
+  const elapsed = Date.now() - state.startTime
+  if (elapsed >= state.timeLimit) {
+    const winner = [...newState.players].sort((a, b) => b.wealth - a.wealth)[0]
+    return { ...checked, winner, phase: 'game_over', log: ['Time up! Highest wealth wins.', ...checked.log].slice(0, 20) }
   }
 
   return {
@@ -517,16 +525,18 @@ export function startDrawPhase(state: GameState, playerIndex: number): { state: 
   let currentState = state;
   let lastDrawnCard = null;
   
-  // Always draw at least 1 card, then draw up to 4
-  const res = drawCard(currentState, playerIndex);
-  currentState = res.state;
-  lastDrawnCard = res.card;
+  // Only draw if hand size is less than 4
+  if (currentState.players[playerIndex].hand.length < 4) {
+    const res = drawCard(currentState, playerIndex);
+    currentState = res.state;
+    lastDrawnCard = res.card;
 
-  while (currentState.players[playerIndex].hand.length < 4) {
-    const r = drawCard(currentState, playerIndex);
-    currentState = r.state;
-    if (!r.card) break;
-    lastDrawnCard = r.card;
+    while (currentState.players[playerIndex].hand.length < 4) {
+      const r = drawCard(currentState, playerIndex);
+      currentState = r.state;
+      if (!r.card) break;
+      lastDrawnCard = r.card;
+    }
   }
   
   return { state: currentState, card: lastDrawnCard };

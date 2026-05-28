@@ -94,6 +94,11 @@ export function MultiplayerGame() {
     // Always accept if the remote state advanced to a newer turn
     if (remoteState.turn > localState.turn) return true
     
+    // Always accept if the number of active players decreased (someone forfeited)
+    const remoteActiveCount = remoteState.players.filter(p => !p.hasForfeited).length
+    const localActiveCount = localState.players.filter(p => !p.hasForfeited).length
+    if (remoteActiveCount < localActiveCount) return true
+    
     // If it's NOT our turn, we must accept phase/log changes from the active player
     const isMyTurnLocally = localState.players[localState.currentPlayerIndex]?.id === myPlayerId
     if (!isMyTurnLocally) {

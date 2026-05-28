@@ -293,7 +293,13 @@ function WaitingRoom({
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
+    <div style={{ minHeight: '100vh', background: 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, position: 'relative' }}>
+      <button
+        onClick={onLeave}
+        style={{ position: 'absolute', top: 24, left: 24, background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontSize: 16, fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: 6 }}
+      >
+        ← Back to Dashboard
+      </button>
       <div style={{ width: '100%', maxWidth: 520, animation: 'slideUp 0.4s ease' }}>
 
         {/* Room Code */}

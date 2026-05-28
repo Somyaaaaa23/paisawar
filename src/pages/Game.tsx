@@ -142,6 +142,7 @@ export function Game() {
 
   const handleDrawCard = () => {
     if (!gameState || animating) return
+    if (gameState.phase !== 'draw') return
     const currentPlayer = gameState.players[gameState.currentPlayerIndex]
     if (currentPlayer.isBot || gameState.currentPlayerIndex !== humanPlayerIndex) return
 
