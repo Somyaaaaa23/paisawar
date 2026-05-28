@@ -69,7 +69,7 @@ export function GameBoard({
           borderRadius: 20, padding: '24px', minHeight: 480, boxShadow: 'none'
         }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
-          <h2 style={{ margin: 0, fontSize: 23, color: '#f1f5f9', fontWeight: 700 }}>
+          <h2 style={{ margin: 0, fontSize: 23, color: 'var(--text-dark)', fontWeight: 700 }}>
             {isMyTurn ? <span style={{ color: '#60a5fa' }}>Your Turn</span> : <span>{currentPlayer?.name}'s Turn</span>}
           </h2>
           <div style={{ fontSize: 15, color: '#475569', fontWeight: 700 }}>TURN {gameState.turn}</div>

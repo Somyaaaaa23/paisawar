@@ -49,7 +49,6 @@ export function Dashboard() {
   }, [tab])
 
   const fetchLeaderboard = async () => {
-    if (leaderboard.length > 0) return // Basic cache for session
     setLeaderboardLoading(true)
     const { data } = await supabase
       .from('leaderboard')

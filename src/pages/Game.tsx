@@ -102,8 +102,9 @@ export function Game() {
     if (profile?.id && profile?.username) {
       const humanPlayer = forfeitState.players[humanPlayerIndex]
       playSound('lose')
-      saveGameResult(profile.id, profile.username, false, humanPlayer.wealth).then(() => {
-        refreshProfile()
+      saveGameResult(profile.id, profile.username, false, humanPlayer.wealth).then(async () => {
+        await supabase.from('profiles').update({ daanik_coins: Math.max(0, (profile.daanik_coins || 0) - 25) }).eq('id', profile.id)
+        await refreshProfile()
         navigate('/dashboard')
       })
     } else {

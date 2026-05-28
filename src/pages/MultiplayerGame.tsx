@@ -163,10 +163,12 @@ export function MultiplayerGame() {
     const gs = gameStateRef.current
     if (!gs || gs.phase === 'game_over') return
     
+    const activePlayerId = gs.players[gs.currentPlayerIndex].id
     const isHost = gs.players[0].id === myPlayerId
-    const isMe = gs.players[gs.currentPlayerIndex].id === myPlayerId
+    const isMe = activePlayerId === myPlayerId
     
-    if (!isHost && !isMe) return
+    // If we are not host or active player, only allow timeout if active player is offline
+    if (!isHost && !isMe && onlinePlayers.has(activePlayerId)) return
 
     const newState = forceSkipTurn(gs)
     setGameState(newState)
@@ -305,9 +307,6 @@ export function MultiplayerGame() {
     if (gs.currentPlayerIndex === myPlayerIndex) {
       forfeitState = advanceTurn(forfeitState)
     } else {
-      // It's not our turn, so just check win condition in case we were the last active player
-      // Need to import checkWinCondition if we were to call it directly. But actually advanceTurn is called by the current player eventually.
-      // Wait, let's just do a quick win check.
       const activePlayers = updatedPlayers.filter(p => !p.hasForfeited)
       if (activePlayers.length <= 1) {
         const remainingWinner = activePlayers[0] ?? updatedPlayers[0]
@@ -325,6 +324,14 @@ export function MultiplayerGame() {
     
     await pushState(forfeitState)
     await leaveRoom(roomId, myPlayerId).catch(() => {})
+
+    // Record loss and deduct 25 coins
+    if (profile) {
+      await saveGameResult(profile.id, profile.username, false, 0, gs.players.length, gs.players.length, profile.win_streak ?? 0)
+      await supabase.from('profiles').update({ daanik_coins: Math.max(0, (profile.daanik_coins || 0) - 25) }).eq('id', profile.id)
+      await refreshProfile()
+    }
+    
     navigate('/dashboard')
   }
 

@@ -28,6 +28,8 @@ export function ForfeitModal({ onCancel, onConfirm }: ForfeitModalProps) {
         </h2>
         <p style={{ fontSize: 18, color: 'var(--text-muted)', lineHeight: 1.5, marginBottom: 32 }}>
           Are you sure you want to leave? If you leave now, you will automatically <strong style={{ color: 'var(--orange-dark)' }}>lose this match</strong> and incur any rank point deductions.
+          <br /><br />
+          <strong style={{ color: '#ef4444' }}>Leaving the match may result in a deduction of 25 DC Coins.</strong>
         </p>
         <div style={{ display: 'flex', gap: 12, width: '100%' }}>
           <Button variant="secondary" onClick={onCancel} style={{ flex: 1 }}>
