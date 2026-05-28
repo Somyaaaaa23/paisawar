@@ -205,6 +205,15 @@ export async function pushGameState(roomId: string, gameState: GameState): Promi
     .eq('id', roomId)
 
   if (error) throw error
+
+  // Manually broadcast state change to avoid relying on postgres_changes
+  await supabase
+    .channel(`game-${roomId}`)
+    .send({
+      type: 'broadcast',
+      event: 'game_state_changed',
+      payload: { game_state: gameState }
+    })
 }
 
 // Single unified subscription. Uses a named broadcast channel on the room so that

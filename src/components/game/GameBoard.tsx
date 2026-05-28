@@ -41,6 +41,13 @@ export function GameBoard({
   const myPlayer = myPlayerIndex >= 0 ? gameState.players[myPlayerIndex] : null
   const currentPlayer = gameState.players[gameState.currentPlayerIndex]
 
+  // Rearrange players for display so local player is always first
+  const displayPlayers = [...gameState.players]
+  if (myPlayerIndex > 0) {
+    const me = displayPlayers.splice(myPlayerIndex, 1)[0]
+    displayPlayers.unshift(me)
+  }
+
   return (
     <div style={{ flex: 1, display: 'flex', padding: '16px 24px', gap: 24, maxWidth: 1440, margin: '0 auto', width: '100%' }}>
       
@@ -48,20 +55,23 @@ export function GameBoard({
       <div style={{ flex: '1 1 900px', display: 'flex', flexDirection: 'column', gap: 16 }}>
         {/* Players */}
         <div style={{ display: 'flex', gap: 40, flexWrap: 'wrap' }}>
-          {gameState.players.map((player, i) => (
-            <div key={player.id}>
-              <PlayerBoard
-                player={player}
-                isCurrent={i === gameState.currentPlayerIndex}
-                isMe={player.id === myPlayerId}
-                isTarget={uiPhase === 'targeting' && player.id !== myPlayerId}
-                isOffline={isMultiplayer && !onlinePlayers.has(player.id)}
-                wealthGoal={gameState.wealthGoal}
-                seatIndex={i}
-                onClick={() => onTargetSelect(i)}
-              />
-            </div>
-          ))}
+          {displayPlayers.map((player) => {
+            const originalIndex = gameState.players.findIndex(p => p.id === player.id)
+            return (
+              <div key={player.id}>
+                <PlayerBoard
+                  player={player}
+                  isCurrent={originalIndex === gameState.currentPlayerIndex}
+                  isMe={player.id === myPlayerId}
+                  isTarget={uiPhase === 'targeting' && player.id !== myPlayerId}
+                  isOffline={isMultiplayer && !onlinePlayers.has(player.id)}
+                  wealthGoal={gameState.wealthGoal}
+                  seatIndex={originalIndex}
+                  onClick={() => onTargetSelect(originalIndex)}
+                />
+              </div>
+            )
+          })}
         </div>
 
         {/* Action panel */}
