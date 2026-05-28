@@ -27,6 +27,10 @@ export function MultiplayerGame() {
   const [notification, setNotification] = useState<string | null>(null)
   const [showForfeitModal, setShowForfeitModal] = useState(false)
   const [onlinePlayers, setOnlinePlayers] = useState<Set<string>>(new Set())
+  const [connectionStatus, setConnectionStatus] = useState<'connected' | 'disconnected'>('connected')
+  
+  // Use a string representation for stable useEffect dependencies
+  const onlinePlayersStr = Array.from(onlinePlayers).sort().join(',')
 
   // Use refs to avoid stale closures in async callbacks and subscriptions
   const gameStateRef = useRef<GameState | null>(null)
@@ -148,6 +152,7 @@ export function MultiplayerGame() {
       })
       .subscribe(async (status) => {
         if (status === 'SUBSCRIBED') {
+          setConnectionStatus('connected')
           if (myPlayerId) await channel.track({ player_id: myPlayerId })
           
           // Initial fetch after subscription is live — no missed updates
@@ -159,6 +164,8 @@ export function MultiplayerGame() {
           if (data?.game_state) {
             applyRemoteState(data.game_state as GameState)
           }
+        } else if (status === 'TIMED_OUT' || status === 'CHANNEL_ERROR' || status === 'CLOSED') {
+          setConnectionStatus('disconnected')
         }
       })
 
@@ -183,12 +190,84 @@ export function MultiplayerGame() {
     await pushState(newState)
     playSound('lose')
     notify(`Time ran out for ${gs.players[gs.currentPlayerIndex].name}!`)
-  }, [myPlayerId])
+  }, [myPlayerId, onlinePlayers])
 
   async function pushState(state: GameState) {
     if (!roomId) return
     await pushGameState(roomId, state)
   }
+
+  // Auto-forfeit offline opponents after 15s grace period
+  useEffect(() => {
+    const gs = gameStateRef.current
+    if (!gs || gs.phase === 'game_over' || !roomId || !myPlayerId) return
+    
+    // Only the host manages the auto-forfeit to prevent race conditions
+    const isHost = gs.players[0]?.id === myPlayerId
+    if (!isHost) return
+
+    // Find players who are in the game but not in onlinePlayers
+    const offlinePlayerIds = gs.players
+      .filter(p => !p.hasForfeited)
+      .map(p => p.id)
+      .filter(id => !onlinePlayers.has(id))
+
+    if (offlinePlayerIds.length === 0) return
+
+    // Start 15s timer
+    const timer = setTimeout(async () => {
+      // Re-evaluate after 15s using latest refs
+      const currentGs = gameStateRef.current
+      if (!currentGs || currentGs.phase === 'game_over') return
+      
+      let forfeitState = { ...currentGs }
+      let didForfeit = false
+
+      offlinePlayerIds.forEach(offlineId => {
+        if (!onlinePlayers.has(offlineId)) {
+          // They are STILL offline after 15s, force forfeit
+          const updatedPlayers = forfeitState.players.map(p => 
+            p.id === offlineId ? { ...p, wealth: 0, hasForfeited: true } : p
+          )
+          const offlinePlayer = forfeitState.players.find(p => p.id === offlineId)
+          forfeitState = {
+            ...forfeitState,
+            players: updatedPlayers,
+            log: [`${offlinePlayer?.name} disconnected and forfeited.`, ...forfeitState.log].slice(0, 20)
+          }
+          didForfeit = true
+
+          // Pass turn if it was their turn
+          if (currentGs.players[currentGs.currentPlayerIndex].id === offlineId) {
+             forfeitState = advanceTurn(forfeitState)
+          }
+        }
+      })
+
+      if (didForfeit) {
+        // Check win condition
+        const activeCount = forfeitState.players.filter(p => !p.hasForfeited).length
+        if (activeCount <= 1) {
+          const winner = forfeitState.players.filter(p => !p.hasForfeited)[0] ?? forfeitState.players[0]
+          forfeitState = {
+            ...forfeitState,
+            winner,
+            phase: 'game_over',
+            log: [`🏆 Everyone else disconnected! ${winner.name} WINS!`, ...forfeitState.log].slice(0, 20)
+          }
+        }
+
+        setGameState(forfeitState)
+        gameStateRef.current = forfeitState
+        await pushState(forfeitState)
+        if (forfeitState.phase === 'game_over') {
+          saveResult(forfeitState)
+        }
+      }
+    }, 15000)
+
+    return () => clearTimeout(timer)
+  }, [onlinePlayersStr, roomId, myPlayerId])
 
   // --- Game action handlers ---
 
@@ -458,6 +537,19 @@ export function MultiplayerGame() {
           onCancel={() => setShowForfeitModal(false)}
           onConfirm={handleForfeit}
         />
+      )}
+
+      {connectionStatus === 'disconnected' && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+          background: 'rgba(15, 23, 42, 0.9)', backdropFilter: 'blur(10px)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          zIndex: 10000, color: 'white', flexDirection: 'column', gap: 16
+        }}>
+          <div style={{ width: 44, height: 44, border: '4px solid #3b82f6', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
+          <h2 style={{ fontSize: 24, fontWeight: 800, fontFamily: 'Space Grotesk, sans-serif' }}>Connection Lost</h2>
+          <p style={{ color: '#94a3b8', fontSize: 18 }}>Attempting to reconnect to game server...</p>
+        </div>
       )}
 
       {notification && (
