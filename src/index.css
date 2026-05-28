@@ -327,6 +327,7 @@ input, textarea, select {
     -webkit-overflow-scrolling: touch !important;
     scrollbar-width: none !important;
     -ms-overflow-style: none !important;
+    padding-top: 16px !important;
     padding-bottom: 8px !important;
   }
   .players-container::-webkit-scrollbar {
@@ -334,6 +335,20 @@ input, textarea, select {
   }
   .players-container > div {
     flex: 0 0 200px !important;
+  }
+
+  .hand-container {
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    justify-content: flex-start !important;
+    padding-bottom: 12px !important;
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+  }
+  .hand-container::-webkit-scrollbar {
+    display: none !important;
   }
 }
 

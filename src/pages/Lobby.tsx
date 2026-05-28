@@ -370,7 +370,7 @@ function WaitingRoom({
                     {p.username[0]?.toUpperCase()}
                   </div>
                   <div>
-                    <div style={{ fontSize: 18, fontWeight: 600, color: 'var(--text-dark)' }}>{p.username}</div>
+                    <div style={{ fontSize: 18, fontWeight: 600, color: 'var(--text-dark)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 120 }}>{p.username}</div>
                     <div style={{ fontSize: 14, color: 'var(--text-muted)' }}>
                       {p.player_id === room.host_id ? '👑 Host' : `Player ${p.seat_order + 1}`}
                     </div>
@@ -412,7 +412,7 @@ function WaitingRoom({
         )}
 
         {/* Actions */}
-        <div style={{ display: 'flex', gap: 10 }}>
+        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
           {isHost ? (
             <Button
               variant="gold"
@@ -434,7 +434,7 @@ function WaitingRoom({
               {myPlayer?.is_ready ? 'Cancel Ready' : 'Ready Up!'}
             </Button>
           )}
-          <Button variant="ghost" size="lg" onClick={onLeave}>
+          <Button variant="secondary" size="lg" onClick={onLeave} style={{ flex: '1 1 100%' }}>
             Leave
           </Button>
         </div>

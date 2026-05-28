@@ -134,7 +134,7 @@ export function GameBoard({
             {myPlayer && myPlayer.hand.length > 0 && (
               <div style={{ marginTop: 20, borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 16 }}>
                 <p style={{ fontSize: 15, color: '#475569', marginBottom: 10 }}>Your current hand:</p>
-                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'center' }}>
+                <div className="hand-container" style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'center' }}>
                   {myPlayer.hand.map(card => (
                     <GameCardComponent key={card.id} card={card} compact disabled />
                   ))}
@@ -152,7 +152,7 @@ export function GameBoard({
                 {gameState.drawnCard ? `Drew "${gameState.drawnCard.name}" — pick a card to play:` : 'Pick a card to play:'}
               </p>
             </div>
-            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
+            <div className="hand-container" style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
               {myPlayer?.hand.map(card => (
                 <GameCardComponent key={card.id} card={card} onClick={() => onPlayCard(card)} />
               ))}
@@ -174,7 +174,7 @@ export function GameBoard({
               
               <div style={{ marginTop: 20, borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 16 }}>
                 <p style={{ fontSize: 15, color: '#475569', marginBottom: 10 }}>Your current hand:</p>
-                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                <div className="hand-container" style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                   {myPlayer?.hand.map(card => (
                     <div key={card.id} style={{ position: 'relative' }}>
                       {card.id === gameState.pendingDecision!.card.id && (

@@ -89,14 +89,14 @@ export function Dashboard() {
           >
             ☰
           </button>
-          <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 23, color: 'var(--green-primary)' }}>PAISA WAR</div>
+          <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(18px, 5vw, 23px)', color: 'var(--green-primary)' }}>PAISA WAR</div>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.1)', borderRadius: 8, padding: '5px 12px' }}>
-            <span style={{ fontSize: 18 }}>🪙</span>
-            <span style={{ fontSize: 18, fontWeight: 700, color: 'var(--orange-dark)' }}>{coins.toLocaleString()} DC</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(8px, 2vw, 16px)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 4, background: 'rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.1)', borderRadius: 8, padding: '5px clamp(6px, 2vw, 12px)' }}>
+            <span style={{ fontSize: 'clamp(14px, 4vw, 18px)' }}>🪙</span>
+            <span style={{ fontSize: 'clamp(14px, 4vw, 18px)', fontWeight: 700, color: 'var(--orange-dark)', whiteSpace: 'nowrap' }}>{coins.toLocaleString()} DC</span>
           </div>
-          <button onClick={handleLogout} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontSize: 16, fontFamily: 'inherit' }}>Sign Out</button>
+          <button onClick={handleLogout} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontSize: 'clamp(14px, 4vw, 16px)', fontFamily: 'inherit', whiteSpace: 'nowrap' }}>Sign Out</button>
         </div>
       </nav>
 
@@ -324,7 +324,8 @@ function LeaderboardTab({ leaderboard, loading, profile, onRefresh }: { leaderbo
             No entries yet. Be the first to play!
           </div>
         ) : (
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <div className="scroll-x" style={{ width: '100%' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 600 }}>
             <thead>
               <tr style={{ borderBottom: '1px solid rgba(0,0,0,0.1)' }}>
                 {['Rank', 'Player', 'Wins', 'Games', 'Win %', 'Best Wealth'].map(h => (
@@ -352,7 +353,8 @@ function LeaderboardTab({ leaderboard, loading, profile, onRefresh }: { leaderbo
                 )
               })}
             </tbody>
-          </table>
+            </table>
+          </div>
         )}
       </Card>
     </div>
@@ -531,10 +533,10 @@ function ProfileTab() {
         </div>
 
         {/* Profile Info */}
-        <div style={{ padding: '60px 32px 32px 32px' }}>
+        <div style={{ padding: '60px clamp(16px, 4vw, 32px) 32px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 16 }}>
-            <div>
-              <h2 style={{ fontSize: 36, fontWeight: 800, color: 'var(--text-dark)', fontFamily: 'Space Grotesk, sans-serif', marginBottom: 8, letterSpacing: '-0.02em' }}>
+            <div style={{ minWidth: 0, flex: 1 }}>
+              <h2 style={{ fontSize: 'clamp(24px, 6vw, 36px)', fontWeight: 800, color: 'var(--text-dark)', fontFamily: 'Space Grotesk, sans-serif', marginBottom: 8, letterSpacing: '-0.02em', wordBreak: 'break-all' }}>
                 {profile?.username ?? 'Unknown Player'}
               </h2>
               <RankBadge rp={rp} showProgress />
