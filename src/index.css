@@ -470,6 +470,7 @@ input, textarea, select {
     max-width: 100% !important;
     padding-left: 12px !important;
     padding-right: 12px !important;
+    padding-bottom: env(safe-area-inset-bottom) !important;
     overflow-x: hidden !important;
   }
 
@@ -613,6 +614,14 @@ input, textarea, select {
   ========================================= */
 
   .bottom-nav-spacer {
-    height: 90px;
+    height: calc(90px + env(safe-area-inset-bottom));
   }
+  /* =========================================
+     GAME LOG ACCORDION
+  ========================================= */
+
+  .game-log-content:not(.expanded) > div:not(:first-child) {
+    display: none !important;
+  }
+  
 }

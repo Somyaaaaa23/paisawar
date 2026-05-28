@@ -76,7 +76,7 @@ export function GameBoard({
 
         {/* Action panel */}
         <div className="glass-panel" style={{
-          borderRadius: 20, padding: '24px', minHeight: 480, boxShadow: 'none'
+          borderRadius: 20, padding: '24px', boxShadow: 'none'
         }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
           <h2 style={{ margin: 0, fontSize: 23, color: 'var(--text-dark)', fontWeight: 700 }}>
@@ -190,7 +190,7 @@ export function GameBoard({
             </div>
 
             {/* Right Side: Decision Options */}
-            <div style={{ flex: '1 1 240px', minWidth: 220, display: 'flex', flexDirection: 'column', gap: 8, borderLeft: '1px solid rgba(0,0,0,0.1)', paddingLeft: 24, animation: 'fadeIn 0.3s ease', maxHeight: '50vh', overflowY: 'auto', paddingRight: 8 }}>
+            <div style={{ flex: '1 1 240px', minWidth: 220, display: 'flex', flexDirection: 'column', gap: 8, borderLeft: '1px solid rgba(0,0,0,0.1)', paddingLeft: 24, animation: 'fadeIn 0.3s ease', paddingRight: 8 }}>
               <h3 style={{ fontSize: 22, fontWeight: 800, color: 'var(--text-dark)', marginBottom: 4, fontFamily: 'var(--font-display)' }}>
                 {gameState.pendingDecision.card.name}
               </h3>
