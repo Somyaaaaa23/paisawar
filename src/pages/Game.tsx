@@ -345,15 +345,17 @@ function EventPopup({ info, onContinue }: { info: { reason: string, amountStr: s
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       zIndex: 9999, animation: 'fadeIn 0.2s ease'
     }}>
-      <div className="glass-panel" style={{
+      <div style={{
+        background: 'linear-gradient(180deg, #004030, #002020)',
+        border: '1px solid rgba(255, 255, 255, 0.1)',
         padding: '40px 32px', borderRadius: 28, maxWidth: 420, width: '90%',
         textAlign: 'center', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)',
         animation: 'slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
       }}>
-        <div style={{ fontSize: 14, color: 'var(--text-muted)', marginBottom: 12, textTransform: 'uppercase', letterSpacing: 1.5, fontWeight: 800 }}>
+        <div style={{ fontSize: 14, color: 'rgba(255, 255, 255, 0.6)', marginBottom: 12, textTransform: 'uppercase', letterSpacing: 1.5, fontWeight: 800 }}>
           Game Event
         </div>
-        <h3 style={{ fontSize: 26, color: 'var(--text-dark)', marginBottom: 28, lineHeight: 1.3, fontWeight: 800, fontFamily: 'Space Grotesk, sans-serif' }}>
+        <h3 style={{ fontSize: 26, color: '#ffffff', marginBottom: 28, lineHeight: 1.3, fontWeight: 800, fontFamily: 'Space Grotesk, sans-serif' }}>
           {info.reason}
         </h3>
         
