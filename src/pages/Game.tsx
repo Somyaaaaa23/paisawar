@@ -338,73 +338,42 @@ export function Game() {
 }
 
 function EventPopup({ info, onContinue }: { info: { reason: string, amountStr: string, isGain: boolean }, onContinue: () => void }) {
-  const [isExiting, setIsExiting] = useState(false)
-
-  const handleDismiss = useCallback(() => {
-    setIsExiting(true)
-    setTimeout(onContinue, 300) // Wait for fade out animation
-  }, [onContinue])
-
   useEffect(() => {
-    // Keep visible for 3.5 seconds before auto-dismissing
     const timer = setTimeout(() => {
-      handleDismiss()
-    }, 3500)
+      onContinue()
+    }, 3000)
     return () => clearTimeout(timer)
-  }, [handleDismiss])
-
-  const bgGradient = info.isGain 
-    ? 'linear-gradient(180deg, #004030, #002020)' 
-    : 'linear-gradient(180deg, #450a0a, #2b0000)'
-  
-  const borderColor = info.isGain 
-    ? 'rgba(255, 255, 255, 0.1)' 
-    : 'rgba(239, 68, 68, 0.3)'
-    
-  const shadowGlow = info.isGain
-    ? '0 25px 50px -12px rgba(0,0,0,0.5)'
-    : '0 20px 60px -10px rgba(239,68,68,0.25)'
-
-  const textLabelColor = info.isGain ? 'rgba(255, 255, 255, 0.6)' : '#fca5a5'
+  }, [onContinue])
 
   return (
     <div style={{
       position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
       background: 'rgba(15, 23, 42, 0.75)', backdropFilter: 'blur(8px)',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
-      zIndex: 9999, animation: isExiting ? 'fadeOut 0.3s ease forwards' : 'fadeIn 0.3s ease'
+      zIndex: 9999, animation: 'fadeIn 0.2s ease'
     }}>
       <div style={{
-        background: bgGradient,
-        border: `1px solid ${borderColor}`,
+        background: '#F8F9FA',
+        border: '1px solid rgba(0, 0, 0, 0.1)',
         padding: '40px 32px', borderRadius: 28, maxWidth: 420, width: '90%',
-        textAlign: 'center', boxShadow: shadowGlow,
-        animation: isExiting ? 'slideDown 0.3s ease forwards' : 'slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
+        textAlign: 'center', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)',
+        animation: 'slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
       }}>
-        <div style={{ fontSize: 14, color: textLabelColor, marginBottom: 12, textTransform: 'uppercase', letterSpacing: 1.5, fontWeight: 800 }}>
-          {info.isGain ? 'Game Event' : 'Warning'}
+        <div style={{ fontSize: 14, color: 'var(--text-muted)', marginBottom: 12, textTransform: 'uppercase', letterSpacing: 1.5, fontWeight: 800 }}>
+          Game Event
         </div>
-        <h3 style={{ fontSize: 26, color: '#ffffff', marginBottom: 28, lineHeight: 1.3, fontWeight: 800, fontFamily: 'Space Grotesk, sans-serif' }}>
+        <h3 style={{ fontSize: 26, color: 'var(--text-dark)', marginBottom: 28, lineHeight: 1.3, fontWeight: 800, fontFamily: 'Space Grotesk, sans-serif' }}>
           {info.reason}
         </h3>
         
         <div style={{ 
           fontSize: 52, fontWeight: 800, fontFamily: 'Space Grotesk, sans-serif',
-          color: info.isGain ? '#10b981' : '#f87171',
-          marginBottom: 36,
-          textShadow: info.isGain ? '0 4px 20px rgba(16,185,129,0.2)' : '0 4px 20px rgba(239,68,68,0.4)'
+          color: info.isGain ? 'var(--green-bright, #10b981)' : '#ef4444',
+          marginBottom: 12,
+          textShadow: info.isGain ? '0 4px 20px rgba(16,185,129,0.2)' : '0 4px 20px rgba(239,68,68,0.2)'
         }}>
           {info.amountStr}
         </div>
-
-        <Button 
-          variant={info.isGain ? "gold" : "danger"} 
-          size="lg" 
-          style={{ width: '100%', fontSize: 18, height: 56 }} 
-          onClick={handleDismiss}
-        >
-          Continue Game
-        </Button>
       </div>
     </div>
   )
