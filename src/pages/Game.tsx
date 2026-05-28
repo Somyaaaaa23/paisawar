@@ -55,7 +55,9 @@ export function Game() {
   const [animating, setAnimating] = useState(false)
   const [notification, setNotification] = useState<string | null>(null)
   const [showForfeitModal, setShowForfeitModal] = useState(false)
+  const [popupInfo, setPopupInfo] = useState<{ reason: string, amountStr: string, isGain: boolean } | null>(null)
   const botTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const prevWealthRef = useRef(500000)
 
   const humanPlayerIndex = 0
 
@@ -113,9 +115,30 @@ export function Game() {
     }
   }
 
+  // Check for wealth changes to show popup
+  useEffect(() => {
+    if (!gameState) return
+    const humanPlayer = gameState.players[humanPlayerIndex]
+    if (!humanPlayer) return
+
+    const wealthDiff = humanPlayer.wealth - prevWealthRef.current
+    
+    // Only show popup during active gameplay
+    if (wealthDiff !== 0 && uiPhase !== 'setup' && uiPhase !== 'result' && gameState.phase !== 'game_over') {
+      const reason = gameState.log[0] || 'Wealth updated'
+      setPopupInfo({
+        reason,
+        amountStr: wealthDiff > 0 ? `+₹${Math.abs(wealthDiff).toLocaleString()}` : `-₹${Math.abs(wealthDiff).toLocaleString()}`,
+        isGain: wealthDiff > 0
+      })
+    }
+    
+    prevWealthRef.current = humanPlayer.wealth
+  }, [gameState, uiPhase])
+
   // Bot turn handler
   useEffect(() => {
-    if (!gameState || uiPhase !== 'playing' || gameState.phase === 'game_over') return
+    if (!gameState || uiPhase !== 'playing' || gameState.phase === 'game_over' || popupInfo !== null) return
     const currentPlayer = gameState.players[gameState.currentPlayerIndex]
     if (!currentPlayer.isBot) return
 
@@ -131,7 +154,7 @@ export function Game() {
     }, 2500)
 
     return () => { if (botTimerRef.current) clearTimeout(botTimerRef.current) }
-  }, [gameState, uiPhase, handleGameOver])
+  }, [gameState, uiPhase, handleGameOver, popupInfo])
 
   const handleTimeout = useCallback(() => {
     const gs = gameStateRef.current
@@ -301,6 +324,48 @@ export function Game() {
           setUiPhase('playing')
         }}
       />
+
+      {popupInfo && (
+        <EventPopup info={popupInfo} onContinue={() => setPopupInfo(null)} />
+      )}
+    </div>
+  )
+}
+
+function EventPopup({ info, onContinue }: { info: { reason: string, amountStr: string, isGain: boolean }, onContinue: () => void }) {
+  return (
+    <div style={{
+      position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+      background: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(8px)',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      zIndex: 9999, animation: 'fadeIn 0.2s ease'
+    }}>
+      <div style={{
+        background: '#ffffff',
+        padding: '36px 32px', borderRadius: 28, maxWidth: 420, width: '90%',
+        textAlign: 'center', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)',
+        animation: 'slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+      }}>
+        <div style={{ fontSize: 14, color: '#64748b', marginBottom: 12, textTransform: 'uppercase', letterSpacing: 1.5, fontWeight: 800 }}>
+          Game Event
+        </div>
+        <h3 style={{ fontSize: 22, color: '#0f172a', marginBottom: 28, lineHeight: 1.4, fontWeight: 700, fontFamily: 'Space Grotesk, sans-serif' }}>
+          {info.reason}
+        </h3>
+        
+        <div style={{ 
+          fontSize: 52, fontWeight: 800, fontFamily: 'Space Grotesk, sans-serif',
+          color: info.isGain ? '#10b981' : '#ef4444',
+          marginBottom: 36,
+          textShadow: info.isGain ? '0 4px 20px rgba(16,185,129,0.2)' : '0 4px 20px rgba(239,68,68,0.2)'
+        }}>
+          {info.amountStr}
+        </div>
+
+        <Button variant="gold" size="lg" style={{ width: '100%', fontSize: 18, height: 56 }} onClick={onContinue}>
+          Continue Game
+        </Button>
+      </div>
     </div>
   )
 }
