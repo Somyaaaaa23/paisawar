@@ -248,7 +248,7 @@ function HomeTab({ navigate, profile, currentSeason }: { navigate: (path: string
         {[
           { label: 'Games Played', value: (profile?.games_played ?? 0).toString(), icon: '🎮', color: 'var(--blue-deep)' },
           { label: 'Games Won', value: (profile?.games_won ?? 0).toString(), icon: '🏆', color: 'var(--green-primary)' },
-          { label: 'Win Streak', value: `${profile?.win_streak ?? 0}🔥`, icon: '🔥', color: 'var(--orange-dark)' },
+          { label: 'Win Streak', value: `${profile?.win_streak ?? 0}`, icon: '🔥', color: 'var(--orange-dark)' },
           { label: 'Total XP', value: (profile?.total_xp ?? 0).toLocaleString(), icon: '⭐', color: 'var(--orange-dark)' },
         ].map(stat => (
           <Card key={stat.label} style={{ padding: '16px 20px' }}>
