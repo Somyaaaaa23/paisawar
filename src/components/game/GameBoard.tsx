@@ -146,7 +146,7 @@ export function GameBoard({
 
         {/* Decision card */}
         {uiPhase === 'decision' && gameState.pendingDecision && (
-          <div style={{ display: 'flex', gap: 24, alignItems: 'flex-start' }}>
+          <div style={{ display: 'flex', gap: 24, alignItems: 'flex-start', flexWrap: 'wrap' }}>
             {/* Left Side: Hand & Context */}
             <div style={{ flex: '1 1 200px' }}>
               <div style={{ marginBottom: 16, display: 'none' /* hidden for cleaner look */ }}>
@@ -174,7 +174,7 @@ export function GameBoard({
             </div>
 
             {/* Right Side: Decision Options */}
-            <div style={{ flex: '0 1 240px', minWidth: 220, display: 'flex', flexDirection: 'column', gap: 8, borderLeft: '1px solid rgba(0,0,0,0.1)', paddingLeft: 24, animation: 'fadeIn 0.3s ease' }}>
+            <div style={{ flex: '1 1 240px', minWidth: 220, display: 'flex', flexDirection: 'column', gap: 8, borderLeft: '1px solid rgba(0,0,0,0.1)', paddingLeft: 24, animation: 'fadeIn 0.3s ease', maxHeight: '50vh', overflowY: 'auto', paddingRight: 8 }}>
               <h3 style={{ fontSize: 22, fontWeight: 800, color: 'var(--text-dark)', marginBottom: 4, fontFamily: 'var(--font-display)' }}>
                 {gameState.pendingDecision.card.name}
               </h3>

@@ -201,10 +201,8 @@ export function GameCard({ card, onClick, selected, disabled, compact, faceDown 
           color: '#4b5563',
           textAlign: 'center',
           lineHeight: 1.3,
-          display: '-webkit-box',
-          WebkitLineClamp: 4,
-          WebkitBoxOrient: 'vertical',
-          overflow: 'hidden',
+          maxHeight: 60,
+          overflowY: 'auto',
           padding: '0 4px',
         }}>
           {card.flavor}
