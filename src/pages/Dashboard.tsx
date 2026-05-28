@@ -168,12 +168,13 @@ export function Dashboard() {
       </div>
 
       {/* Bottom Nav (Mobile) */}
-      <nav className="glass-panel mobile-flex" style={{
+      <nav className="glass-panel mobile-flex bottom-nav" style={{
         position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 50,
         padding: '8px 16px',
         justifyContent: 'space-around', alignItems: 'center',
         borderLeft: 'none', borderRight: 'none', borderBottom: 'none',
         borderRadius: 0,
+        flexWrap: 'nowrap',
         display: 'none', // Hidden by default, shown by .mobile-flex
       }}>
         {([
@@ -184,6 +185,7 @@ export function Dashboard() {
         ] as const).map(item => (
           <button
             key={item.id}
+            className="bottom-nav-btn"
             onClick={() => setTab(item.id)}
             style={{
               display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4,

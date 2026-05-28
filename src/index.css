@@ -478,7 +478,7 @@ input, textarea, select {
      HEADER / NAVBAR
   ========================================= */
 
-  nav,
+  nav:not(.bottom-nav),
   .navbar,
   .topbar {
     width: 100%;
@@ -585,7 +585,7 @@ input, textarea, select {
 
   .primary-btn,
   .secondary-btn,
-  button {
+  button:not(.bottom-nav-btn) {
     min-height: 48px !important;
     border-radius: 14px !important;
     padding: 12px 16px !important;
