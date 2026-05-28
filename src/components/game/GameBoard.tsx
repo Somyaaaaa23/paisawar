@@ -49,12 +49,12 @@ export function GameBoard({
   }
 
   return (
-    <div style={{ flex: 1, display: 'flex', padding: '16px 24px', gap: 24, maxWidth: 1440, margin: '0 auto', width: '100%' }}>
+    <div className="game-board-layout" style={{ flex: 1, display: 'flex', padding: '16px 24px', gap: 24, maxWidth: 1440, margin: '0 auto', width: '100%' }}>
       
       {/* LEFT COLUMN: Players & Action */}
-      <div style={{ flex: '1 1 900px', display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <div className="game-left-col" style={{ flex: '1 1 900px', display: 'flex', flexDirection: 'column', gap: 16 }}>
         {/* Players */}
-        <div style={{ display: 'flex', gap: 40, flexWrap: 'wrap' }}>
+        <div className="players-container">
           {displayPlayers.map((player) => {
             const originalIndex = gameState.players.findIndex(p => p.id === player.id)
             return (
@@ -252,10 +252,11 @@ export function GameBoard({
           </div>
         )}
       </div>
-    </div>
+      {/* END LEFT COLUMN */}
+      </div>
 
-    {/* RIGHT COLUMN: Game Log */}
-    <div style={{ flex: '0 0 280px', display: 'flex', flexDirection: 'column' }}>
+      {/* RIGHT COLUMN: Game Log & Deck (Desktop only if space tight) */}
+      <div className="game-right-col" style={{ flex: '0 0 320px', display: 'flex', flexDirection: 'column', gap: 16 }}>
       <GameLog log={gameState.log} />
       </div>
     </div>

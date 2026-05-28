@@ -295,6 +295,24 @@ input, textarea, select {
     display: none !important;
   }
 
+  /* Layout Adjustments */
+  .game-board-layout {
+    flex-direction: column !important;
+    padding: 12px 16px !important;
+  }
+  .game-left-col, .game-right-col {
+    flex: 1 1 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+  
+  nav {
+    padding: 0 12px !important;
+  }
+  nav .desktop-only {
+    display: none !important;
+  }
+
   /* Modals */
   .modal-content {
     width: 95vw !important;
